@@ -7,6 +7,7 @@ import javax.media.j3d.*;
 import javax.swing.*;
 import javax.vecmath.*;
 
+import com.sun.j3d.utils.applet.MainFrame;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.image.*;
 import com.sun.j3d.utils.universe.*;
@@ -29,7 +30,7 @@ public class Jupiter extends Applet{
 		return m;
 	}
 	   
-	Jupiter(){
+	public Jupiter(){
 		
 		SimpleUniverse universe = new SimpleUniverse();
 		BranchGroup group = new BranchGroup();
@@ -92,9 +93,8 @@ public class Jupiter extends Applet{
 	}
 
 	public static void main(String[] args) {
-		
-		
-		
+//		Jupiter j = new Jupiter();
+//		new MainFrame(j, 300, 300);
 		new Jupiter();
 	}
 
