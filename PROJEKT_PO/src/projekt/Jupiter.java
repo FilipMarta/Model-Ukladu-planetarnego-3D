@@ -1,5 +1,6 @@
 package projekt;
 import java.applet.Applet;
+
 import java.awt.Container;
 
 import javax.media.j3d.*;
@@ -33,7 +34,7 @@ public class Jupiter extends Applet{
 		SimpleUniverse universe = new SimpleUniverse();
 		BranchGroup group = new BranchGroup();
 		
-		TextureLoader tloader = new TextureLoader("C:\\Users\\Filip\\eclipse-workspace\\Hello Universe\\Jupiter.jpg", "LUMINANCE", new Container());
+		TextureLoader tloader = new TextureLoader("C:/Users/Filip/git/Repository/PROJEKT_PO/src/Textures/Jupiter.jpg", "LUMINANCE", new Container());
 		Texture texture = tloader.getTexture();
 		texture.setBoundaryModeS(Texture.WRAP);
 		texture.setBoundaryModeT(Texture.WRAP);
