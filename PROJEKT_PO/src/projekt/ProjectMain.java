@@ -3,13 +3,13 @@ package projekt;
 public class ProjectMain {
 
 	public static void main(String[] args) {
-		ProjectMainFrame frame = new ProjectMainFrame();
+		
+		StartFrame startframe = new StartFrame();
+		
+		startframe.setVisible(true);
 		
 		
-		
-		
-		
-		frame.setVisible(true);
+
 
 	}
 
