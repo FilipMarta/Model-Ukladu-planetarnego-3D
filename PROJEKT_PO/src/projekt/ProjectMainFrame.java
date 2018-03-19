@@ -16,7 +16,7 @@ public class ProjectMainFrame extends JFrame {
 	JMenuItem save = new JMenuItem("Save Configuration");
 
 	
-	JPanel leftside = new JPanel(new GridLayout(10,1));
+	JPanel leftside = new JPanel();
 	JPanel anipanel = new JPanel();
 	JPanel animel = new JPanel(new BorderLayout()); //Filip
 	JPanel bottom = new JPanel();
@@ -26,7 +26,7 @@ public class ProjectMainFrame extends JFrame {
 	
 	
 	JLabel lstarlabel = new JLabel("Star"); //l od left (dla Filipa)
-	JLabel lstarplabel = new JLabel("tu bêd¹ parametry gwiazdki <333");// w ramce
+	JLabel lstarplabel = new JLabel("<html>tu bêd¹ parametry gwiazdki <333<br><br><br></html>");// w ramce
 	JLabel lplanetplabel = new JLabel("<html>tu <br>bêd¹ <br>parametry <br>planet <333</html>");// w ramce
 	
 	
@@ -54,14 +54,20 @@ public class ProjectMainFrame extends JFrame {
 	  		file.add(save);
 	  		
 	  		this.add(leftside, BorderLayout.LINE_START);
+	  		leftside.setLayout(new BoxLayout(leftside, BoxLayout.Y_AXIS));
 	  		this.add(animel, BorderLayout.CENTER);
 	  		animel.add(anipanel, BorderLayout.CENTER);
 	  		animel.add(bottom, BorderLayout.PAGE_END);
 	  		anipanel.setBackground(Color.black); 
 	  		
+	  		
 	  		Border border = BorderFactory.createLineBorder(Color.yellow, 2);
 	  		lstarplabel.setBorder(border);
-	  		lplanetplabel.setBorder(border);
+	  		lplanetplabel.setBorder(border); 
+	  		
+	  		//lstarplabel.setPreferredSize(new Dimension(150,100));
+	  		//planetList.setSize(new Dimension(150,10));
+	  		//lplanetplabel.setPreferredSize(new Dimension(150,100));
 	  		
 	  		sslider.addChangeListener(new SliderChangeListener());
 	  		
@@ -69,6 +75,9 @@ public class ProjectMainFrame extends JFrame {
 	  		leftside.add(lstarplabel);
 	  		leftside.add(planetList);
 	  		leftside.add(lplanetplabel);
+	  		leftside.add(Box.createRigidArea(new Dimension(0, 225)));
+	  		leftside.add(Box.createRigidArea(new Dimension(0, 150)));
+	  		
 	  		
 	  		bottom.add(speed);
 	  		bottom.add(sslider);
