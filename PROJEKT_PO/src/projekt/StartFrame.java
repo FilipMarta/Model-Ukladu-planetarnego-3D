@@ -29,7 +29,7 @@ public class StartFrame extends JFrame {
 	
 	
 	
-	StartFrame(){
+	public StartFrame(){
 		this.setSize(WEIGHT, HEIGHT);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setTitle("Set the parameters of your star");
