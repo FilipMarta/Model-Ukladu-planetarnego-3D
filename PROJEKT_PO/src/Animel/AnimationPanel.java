@@ -147,9 +147,9 @@ public class AnimationPanel extends JPanel{
 		Point3f point = new Point3f(10f,0,0);
 		Star sun = new Star("Sun", 1.5f, 0, new Point3f(0,0,0));
 		Planet jupiter = new Planet("Jupiter", 1f, 0,0, point, null);
-		Planet earth = new Planet("Earth", 0.3f, 0,0,new Point3f(3f,0,-4f), null);
+		Planet earth = new Planet("Earth", 0.3f, 0,0,new Point3f(4f,0,-4f), null);
 		earth.setTexture("Earth.jpg");
-		Planet mars = new Planet("Mars", 0.2f, 0,0,new Point3f(-1f,0,2f), null);
+		Planet mars = new Planet("Mars", 0.2f, 0,0,new Point3f(-4f,0,4f), null);
 		mars.setTexture("2k_mars.jpg");
 		Planet neptune = new Planet("Neptune", 0.8f, 0,0,new Point3f(-7f,0,-10f), null);
 		neptune.setTexture("2k_neptune.jpg");
