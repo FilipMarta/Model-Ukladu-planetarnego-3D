@@ -17,8 +17,8 @@ public class ProjectMainFrame extends JFrame {
 
 	
 	JPanel leftside = new JPanel();
-	//JPanel anipanel = new JPanel();
-	Sphere3D anipanel = new Sphere3D();
+	JPanel anipanel = new JPanel();
+	//Sphere3D anipanel = new Sphere3D();
 	JPanel animel = new JPanel(new BorderLayout()); //Filip
 	JPanel bottom = new JPanel();
 	
@@ -59,7 +59,7 @@ public class ProjectMainFrame extends JFrame {
 	  		this.add(animel, BorderLayout.CENTER);
 	  		animel.add(anipanel, BorderLayout.CENTER);
 	  		animel.add(bottom, BorderLayout.PAGE_END);
-	  		//anipanel.setBackground(Color.black); 
+	  		anipanel.setBackground(Color.black); 
 	  		
 	  		
 	  		Border border = BorderFactory.createLineBorder(Color.yellow, 2);
