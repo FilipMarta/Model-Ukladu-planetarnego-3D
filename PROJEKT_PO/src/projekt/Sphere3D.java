@@ -31,7 +31,7 @@ public class Sphere3D extends JPanel{
 		
 		
 		Appearance app = new Appearance();
-	    Texture tex = new TextureLoader("src/Textures/Jupiter.jpg", this).getTexture();
+	    Texture tex = new TextureLoader("src/Textures/Jupiter.jpg", null).getTexture();
 	    app.setTexture(tex);
 	    TextureAttributes texAttr = new TextureAttributes();
 	    texAttr.setTextureMode(TextureAttributes.MODULATE);
@@ -60,17 +60,14 @@ public class Sphere3D extends JPanel{
 	}
 	
 	public static void main(String args[]) {
-		new Sphere3D();
+		JFrame frame = new JFrame();
+		frame.setSize(250, 250);
+		frame.setTitle("Kula w panelu");
+		
+		Sphere3D panel = new Sphere3D();
+		frame.add(panel, BorderLayout.CENTER);
+		
+		frame.setVisible(true);
 	}
-//	public static void main(String args[]) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(250, 250);
-//		frame.setTitle("Kula w panelu");
-//		
-//		Sphere3D panel = new Sphere3D();
-//		frame.add(panel, BorderLayout.CENTER);
-//		
-//		frame.setVisible(true);
-//	}
 	
 }
