@@ -39,19 +39,13 @@ public class Planet extends Sphere{
 		return tg;
 		
 	}
+	
+	void setTexture(String filename) {
+		texture = new TextureLoader("src/Textures/"+filename, null).getTexture();
+		appearance.setTexture(texture);
+	}
 
-	void setTexture() {
-		texture = new TextureLoader("src/Textures/2k_neptune.jpg", null).getTexture();
-		appearance.setTexture(texture);
-	}
-	void setTexture2() {
-		texture = new TextureLoader("src/Textures/2k_mars.jpg", null).getTexture();
-		appearance.setTexture(texture);
-	}
-	void setTexture3() {
-		texture = new TextureLoader("src/Textures/Earth.jpg", null).getTexture();
-		appearance.setTexture(texture);
-	}
+	
 	
 	
 	Planet(String name, float objectRadius, float mass, float orbitRadius, Point3f position, Vector3f velocity) throws HeadlessException {
@@ -66,8 +60,7 @@ public class Planet extends Sphere{
 		
 		
 		appearance = new Appearance();
-		texture = new TextureLoader("src/Textures/Jupiter.jpg", null).getTexture();
-		appearance.setTexture(texture);
+		setTexture("Jupiter.jpg");
 		texAtt = new TextureAttributes();
 		texAtt.setTextureMode(TextureAttributes.MODULATE);
 		appearance.setTextureAttributes(texAtt);

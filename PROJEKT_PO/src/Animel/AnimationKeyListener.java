@@ -31,7 +31,7 @@ public class AnimationKeyListener implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 
 		if(e.getKeyChar()=='r') {
-			panel.cameraPoint.set(0, 0, 30f);
+			panel.cameraPoint.set(0, 0, 20f);
 			panel.cameraDir.set(0,0,-1);
 			panel.phi =0;
 			panel.tetha =0;

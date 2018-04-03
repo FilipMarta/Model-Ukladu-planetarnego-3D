@@ -25,7 +25,7 @@ public class AnimationPanel extends JPanel{
 	
 	BoundingSphere bounds = new BoundingSphere(new Point3d(0,0,0), 100);
 	
-	Point3f cameraPoint = new Point3f(0,0,30);
+	Point3f cameraPoint = new Point3f(0,0,20);
 	Vector3f cameraDir = new Vector3f(0,0,-1);
 	Vector3f cameraUp = new Vector3f(0,1,0);
 	
@@ -129,7 +129,7 @@ public class AnimationPanel extends JPanel{
         AmbientLight alight = new AmbientLight();
         
         alight.setInfluencingBounds(bounds);
-       // group.addChild(alight);
+        group.addChild(alight);
 	}
 
 	void initBackground() {
@@ -144,24 +144,20 @@ public class AnimationPanel extends JPanel{
 	
 	
 	void initObjects() {
-		Point3f point = new Point3f(20f,0,0);
-		Point3f point2 = new Point3f(-20f,0,-20f);
-		Point3f point3 = new Point3f(10f,0,-5f);
-		Point3f point4 = new Point3f(-5f,0,3f);
-		Star sun = new Star("Sun", 2f, 0, new Point3f(0,0,0));
+		Point3f point = new Point3f(10f,0,0);
+		Star sun = new Star("Sun", 1.5f, 0, new Point3f(0,0,0));
 		Planet jupiter = new Planet("Jupiter", 1f, 0,0, point, null);
-		Planet neptune = new Planet("Neptune", 0.8f, 0,0, point2, null);
-		Planet earth = new Planet("Earth", 0.5f, 0,0, point3, null);
-		Planet mars = new Planet("Mars", 0.3f, 0,0, point4, null);
-		neptune.setTexture();
-		earth.setTexture3();
-		mars.setTexture2();
-		
+		Planet earth = new Planet("Earth", 0.3f, 0,0,new Point3f(3f,0,-4f), null);
+		earth.setTexture("Earth.jpg");
+		Planet mars = new Planet("Mars", 0.2f, 0,0,new Point3f(-1f,0,2f), null);
+		mars.setTexture("2k_mars.jpg");
+		Planet neptune = new Planet("Neptune", 0.8f, 0,0,new Point3f(-7f,0,-10f), null);
+		neptune.setTexture("2k_neptune.jpg");
 
 		group.addChild(jupiter.setPosition());
-		group.addChild(neptune.setPosition());
 		group.addChild(earth.setPosition());
 		group.addChild(mars.setPosition());
+		group.addChild(neptune.setPosition());
 		group.addChild(sun);
 	}
 	
