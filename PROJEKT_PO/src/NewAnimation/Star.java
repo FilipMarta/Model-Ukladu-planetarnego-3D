@@ -1,12 +1,8 @@
-package Animel;
+package NewAnimation;
 
 import java.awt.*;
 
-import javax.media.j3d.Appearance;
-import javax.media.j3d.Material;
-import javax.media.j3d.Texture;
-import javax.media.j3d.TextureAttributes;
-import javax.vecmath.*;
+import javax.media.j3d.*;
 
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.image.TextureLoader;
@@ -18,20 +14,28 @@ public class Star extends Sphere{
 	String name;
 	float objectRadius;
 	float mass;
-	Point3f position;
 	
 	Appearance appearance;
 	Texture texture;
 	TextureAttributes texAtt;
 
+	
+	float toLocal(float f) {
+		f/=Math.pow(10, 7);
+		return f;
+	}
+	
+	float toNormal(float f) {
+		f*=Math.pow(10, 7);
+		return f;
+	}
 
-	Star(String name, float objectRadius, float mass, Point3f position) throws HeadlessException {
-		super(objectRadius,Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS, 100);
+	Star(String name, float objectRadius, float mass) throws HeadlessException {
+		super(objectRadius/200000,Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS, 100);
 		
 		this.name = name;
-		this.objectRadius = objectRadius;
-		this.mass = mass;
-		this.position = position;
+		this.objectRadius = objectRadius/100000;
+		this.mass = (float)(toLocal(mass)/Math.pow(10, 25));
 		
 		
 		appearance = new Appearance();
