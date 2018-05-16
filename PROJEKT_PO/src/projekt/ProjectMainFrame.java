@@ -20,9 +20,8 @@ public class ProjectMainFrame extends JFrame {
 	JMenuItem save = new JMenuItem("Save Configuration");
 
 	
-	JPanel leftside = new JPanel();
+	JPanel leftside = new JPanel();//new GridLayout(3,1));
 	JPanel anipanel = new JPanel();
-	//Sphere3D anipanel = new Sphere3D();
 	JPanel animel = new JPanel(new BorderLayout()); //Filip
 	JPanel bottom = new JPanel();
 	
@@ -82,6 +81,7 @@ public class ProjectMainFrame extends JFrame {
 	  		
 	  		this.add(leftside, BorderLayout.LINE_START);
 	  		leftside.setLayout(new BoxLayout(leftside, BoxLayout.Y_AXIS));
+	  		//leftside.setMinimumSize();
 	  		this.add(animel, BorderLayout.CENTER);
 	  		animel.add(anipanel, BorderLayout.CENTER);
 	  		animel.add(bottom, BorderLayout.PAGE_END);
@@ -101,6 +101,7 @@ public class ProjectMainFrame extends JFrame {
 	  		
 	  		sslider.addChangeListener(new SliderChangeListener());
 	  		
+	  		addobject.setAlignmentX(Component.CENTER_ALIGNMENT);
 	  		leftside.add(addobject);
 	  		addobject.addActionListener(new JButtonListener(this));
 	  		leftside.add(planetList);

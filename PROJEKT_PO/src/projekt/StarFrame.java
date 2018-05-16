@@ -16,7 +16,7 @@ public class StarFrame extends JFrame { //Marta
 	JPanel toppanel = new JPanel(new GridLayout(3,2));
 	JPanel bottompanel = new JPanel(new GridLayout(1,3));
 	
-	JLabel title = new JLabel("Set parameters of your star:");
+	JLabel title = new JLabel("Set parameters of celestial object:");
 	JLabel lname = new JLabel("Name: ");
 	JLabel lmass = new JLabel("Mass: ");
 	JLabel lradius = new JLabel("Radius: ");
