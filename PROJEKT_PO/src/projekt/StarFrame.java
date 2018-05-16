@@ -9,8 +9,8 @@ import javax.swing.*;
 
 public class StarFrame extends JFrame { //Marta
 
-	int WEIGHT = 280;
-	int HEIGHT = 180;
+	int WEIGHT = 500;
+	int HEIGHT = 200;
 	
 	JPanel pagetitle = new JPanel(new GridLayout(1,1));
 	JPanel toppanel = new JPanel(new GridLayout(3,2));
@@ -20,9 +20,21 @@ public class StarFrame extends JFrame { //Marta
 	JLabel lname = new JLabel("Name: ");
 	JLabel lmass = new JLabel("Mass: ");
 	JLabel lradius = new JLabel("Radius: ");
+	JLabel lxlocation = new JLabel("X location: ");
+	JLabel lylocation = new JLabel("Y location: ");
+	JLabel lzlocation = new JLabel("Z location: ");
+	JLabel lxvelocity = new JLabel("X velocity: ");
+	JLabel lyvelocity = new JLabel("Y velocity: ");
+	JLabel lzvelocity = new JLabel("Z velocity: ");
 	JTextField name = new JTextField();
 	JTextField mass = new JTextField();
 	JTextField radius = new JTextField();
+	JTextField xlocation = new JTextField();
+	JTextField ylocation = new JTextField();
+	JTextField zlocation = new JTextField();
+	JTextField xvelocity = new JTextField();
+	JTextField yvelocity = new JTextField();
+	JTextField zvelocity = new JTextField();
 	
 	
 	JButton okbutton = new JButton("OK");
@@ -46,6 +58,18 @@ public class StarFrame extends JFrame { //Marta
 		toppanel.add(mass);
 		toppanel.add(lradius);
 		toppanel.add(radius);
+		toppanel.add(lxlocation);
+		toppanel.add(xlocation);
+		toppanel.add(lylocation);
+		toppanel.add(ylocation);
+		toppanel.add(lzlocation);
+		toppanel.add(zlocation);
+		toppanel.add(lxvelocity);
+		toppanel.add(xvelocity);
+		toppanel.add(lyvelocity);
+		toppanel.add(yvelocity);
+		toppanel.add(lzvelocity);
+		toppanel.add(zvelocity);
 	
 		bottompanel.add(okbutton);
 		okbutton.addActionListener(new JButtonListener());
@@ -58,7 +82,8 @@ public class StarFrame extends JFrame { //Marta
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "OK")
 			{
-					Objects ob = new Objects(name.getText(), Double.parseDouble(mass.getText()), Double.parseDouble(radius.getText()));
+					Objects ob = new Objects(name.getText(), Double.parseDouble(mass.getText()), Double.parseDouble(radius.getText()),
+							Double.parseDouble(xlocation.getText()), Double.parseDouble(ylocation.getText()), Double.parseDouble(zlocation.getText()), Double.parseDouble(xvelocity.getText()),	Double.parseDouble(yvelocity.getText()), Double.parseDouble(zvelocity.getText()));
 					mainFrame.addNewObject(ob);
 					
 				

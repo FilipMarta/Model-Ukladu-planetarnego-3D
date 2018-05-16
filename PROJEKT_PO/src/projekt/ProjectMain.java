@@ -7,9 +7,6 @@ public class ProjectMain {
 		ProjectMainFrame startframe = new ProjectMainFrame();
 		
 		startframe.setVisible(true);
-		
-		
-
 
 	}
 

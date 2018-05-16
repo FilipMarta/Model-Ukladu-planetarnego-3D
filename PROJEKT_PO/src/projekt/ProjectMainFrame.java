@@ -3,6 +3,9 @@ package projekt;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -54,22 +57,43 @@ public class ProjectMainFrame extends JFrame {
 		showData(o);
 	}
 	
-	JPanel parameterespanel = new JPanel(new GridLayout(3,2));
+	JPanel parameterespanel = new JPanel(new GridLayout(9,2));
 	
 	JLabel titlename = new JLabel("Name: ");
 	JLabel titlemass = new JLabel("Mass: ");
 	JLabel titleradius = new JLabel("Radius: ");
+	JLabel titlexlocation = new JLabel("X location: ");
+	JLabel titleylocation = new JLabel("Y location: ");
+	JLabel titlezlocation = new JLabel("Z location: ");
+	JLabel titlexvelocity = new JLabel("X velocity: ");
+	JLabel titleyvelocity = new JLabel("Y velocity: ");
+	JLabel titlezvelocity = new JLabel("Z velocity: ");
+	
 	JLabel name = new JLabel("");
 	JLabel mass = new JLabel("");
 	JLabel radius = new JLabel("");
+	JLabel xlocation = new JLabel("");
+	JLabel ylocation = new JLabel("");
+	JLabel zlocation = new JLabel("");
+	JLabel xvelocity = new JLabel("");
+	JLabel yvelocity = new JLabel("");
+	JLabel zvelocity = new JLabel("");
 	
 	public void showData(Objects obj) {
 		
 		name.setText(obj.name);
 		mass.setText(String.valueOf(obj.mass));
 		radius.setText(String.valueOf(obj.radius));	
+		xlocation.setText(String.valueOf(obj.xlocation));
+		ylocation.setText(String.valueOf(obj.ylocation));	
+		zlocation.setText(String.valueOf(obj.zlocation));
+		xvelocity.setText(String.valueOf(obj.xvelocity));	
+		yvelocity.setText(String.valueOf(obj.yvelocity));
+		zvelocity.setText(String.valueOf(obj.zvelocity));	
+		
 	}
 	
+
 	ProjectMainFrame() throws HeadlessException {
 	  		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	  		this.setSize(800,600);
@@ -93,6 +117,18 @@ public class ProjectMainFrame extends JFrame {
 	  		parameterespanel.add(mass);
 	  		parameterespanel.add(titleradius);
 	  		parameterespanel.add(radius);
+	  		parameterespanel.add(titlexlocation);
+	  		parameterespanel.add(xlocation);
+	  		parameterespanel.add(titleylocation);
+	  		parameterespanel.add(ylocation);
+	  		parameterespanel.add(titlezlocation);
+	  		parameterespanel.add(zlocation);
+	  		parameterespanel.add(titlexvelocity);
+	  		parameterespanel.add(xvelocity);
+	  		parameterespanel.add(titleyvelocity);
+	  		parameterespanel.add(yvelocity);
+	  		parameterespanel.add(titlezvelocity);
+	  		parameterespanel.add(zvelocity);
 	  		
 	  		
 	  		//Border border = BorderFactory.createLineBorder(Color.yellow, 2);
@@ -116,7 +152,6 @@ public class ProjectMainFrame extends JFrame {
 	  		bottom.add(play);
 	  		bottom.add(pause);
 	  		bottom.add(reverse);
-	  		
 	  		
 	}
 	
