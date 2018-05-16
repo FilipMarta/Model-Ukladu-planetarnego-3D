@@ -57,7 +57,7 @@ public class ProjectMainFrame extends JFrame {
 		showData(o);
 	}
 	
-	JPanel parameterespanel = new JPanel(new GridLayout(9,2));
+	JPanel parameterespanel = new JPanel(new GridLayout(10,2));
 	
 	JLabel titlename = new JLabel("Name: ");
 	JLabel titlemass = new JLabel("Mass: ");
@@ -68,6 +68,7 @@ public class ProjectMainFrame extends JFrame {
 	JLabel titlexvelocity = new JLabel("X velocity: ");
 	JLabel titleyvelocity = new JLabel("Y velocity: ");
 	JLabel titlezvelocity = new JLabel("Z velocity: ");
+	JLabel titlestarornot = new JLabel("Is it a star? ");
 	
 	JLabel name = new JLabel("");
 	JLabel mass = new JLabel("");
@@ -78,6 +79,7 @@ public class ProjectMainFrame extends JFrame {
 	JLabel xvelocity = new JLabel("");
 	JLabel yvelocity = new JLabel("");
 	JLabel zvelocity = new JLabel("");
+	JLabel starornot = new JLabel("");
 	
 	public void showData(Objects obj) {
 		
@@ -90,6 +92,7 @@ public class ProjectMainFrame extends JFrame {
 		xvelocity.setText(String.valueOf(obj.xvelocity));	
 		yvelocity.setText(String.valueOf(obj.yvelocity));
 		zvelocity.setText(String.valueOf(obj.zvelocity));	
+		starornot.setText(String.valueOf(obj.starornot));
 		
 	}
 	
@@ -129,6 +132,9 @@ public class ProjectMainFrame extends JFrame {
 	  		parameterespanel.add(yvelocity);
 	  		parameterespanel.add(titlezvelocity);
 	  		parameterespanel.add(zvelocity);
+	  		parameterespanel.add(titlestarornot);
+	  		parameterespanel.add(starornot);
+	  		
 	  		
 	  		
 	  		//Border border = BorderFactory.createLineBorder(Color.yellow, 2);

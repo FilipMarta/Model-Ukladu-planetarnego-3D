@@ -1,6 +1,7 @@
 package projekt;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ public class StarFrame extends JFrame { //Marta
 	
 	JPanel pagetitle = new JPanel(new GridLayout(1,1));
 	JPanel toppanel = new JPanel(new GridLayout(3,2));
-	JPanel bottompanel = new JPanel(new GridLayout(1,3));
+	JPanel bottompanel = new JPanel(new GridLayout(1,1));
 	
 	JLabel title = new JLabel("Set parameters of celestial object:");
 	JLabel lname = new JLabel("Name: ");
@@ -38,6 +39,7 @@ public class StarFrame extends JFrame { //Marta
 	
 	
 	JButton okbutton = new JButton("OK");
+	JCheckBox starbutton = new JCheckBox("Star");
 	ProjectMainFrame mainFrame = null; 
 	
 	
@@ -71,6 +73,8 @@ public class StarFrame extends JFrame { //Marta
 		toppanel.add(lzvelocity);
 		toppanel.add(zvelocity);
 	
+		starbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		bottompanel.add(starbutton);
 		bottompanel.add(okbutton);
 		okbutton.addActionListener(new JButtonListener());
 	
@@ -83,7 +87,7 @@ public class StarFrame extends JFrame { //Marta
 			if (arg0.getActionCommand() == "OK")
 			{
 					Objects ob = new Objects(name.getText(), Double.parseDouble(mass.getText()), Double.parseDouble(radius.getText()),
-							Double.parseDouble(xlocation.getText()), Double.parseDouble(ylocation.getText()), Double.parseDouble(zlocation.getText()), Double.parseDouble(xvelocity.getText()),	Double.parseDouble(yvelocity.getText()), Double.parseDouble(zvelocity.getText()));
+							Double.parseDouble(xlocation.getText()), Double.parseDouble(ylocation.getText()), Double.parseDouble(zlocation.getText()), Double.parseDouble(xvelocity.getText()),	Double.parseDouble(yvelocity.getText()), Double.parseDouble(zvelocity.getText()), starbutton.isSelected());
 					mainFrame.addNewObject(ob);
 					
 				

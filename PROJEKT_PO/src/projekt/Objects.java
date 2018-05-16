@@ -13,8 +13,9 @@ public class Objects {
 	double xvelocity;
 	double yvelocity;
 	double zvelocity;
+	boolean starornot;
 	
-	public Objects(String name, double mass, double radius, double xlocation, double ylocation, double zlocation, double xvelocity, double yvelocity, double zvelocity) {
+	public Objects(String name, double mass, double radius, double xlocation, double ylocation, double zlocation, double xvelocity, double yvelocity, double zvelocity, boolean starornot) {
 		
 		this.name = name;
 		this.mass = mass;
@@ -25,6 +26,8 @@ public class Objects {
 		this.xvelocity = xvelocity;
 		this.yvelocity = yvelocity;
 		this.zvelocity = zvelocity;
+		
+		this.starornot = starornot;
 		
 		
 	}
