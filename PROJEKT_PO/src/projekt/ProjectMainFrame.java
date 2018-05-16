@@ -1,11 +1,15 @@
 package projekt;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import projekt.StarFrame.JButtonListener;
 
 public class ProjectMainFrame extends JFrame {
 	
@@ -25,15 +29,13 @@ public class ProjectMainFrame extends JFrame {
 	
 	ArrayList<String> planets = new ArrayList<String>();
 	
-	
-	JLabel lstarlabel = new JLabel("Star"); //l od left (dla Filipa)
-	JLabel lstarplabel = new JLabel("<html>tu bêd¹ parametry gwiazdki <333<br><br><br></html>");// w ramce
-	JLabel lplanetplabel = new JLabel("<html>tu <br>bêd¹ <br>parametry <br>planet <333</html>");// w ramce
-	
-	
-	
+	JButton addobject = new JButton("Add an object");
 	
 	JComboBox<Object> planetList = new JComboBox<Object>(planets.toArray());
+	
+	JLabel lstarlabel = new JLabel("Object"); //l od left (dla Filipa)
+	
+	ArrayList<Objects> objects = new ArrayList<Objects>();
 	
 	
 	JSlider sslider = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
@@ -44,6 +46,30 @@ public class ProjectMainFrame extends JFrame {
 	JButton pause = new JButton("Pause");
 	JButton reverse = new JButton("Reverse");
 	
+	public void addNewObject(Objects o) {
+		
+		planets.add(o.name);
+		objects.add(o);
+		planetList.addItem(o.name);
+		
+		showData(o);
+	}
+	
+	JPanel parameterespanel = new JPanel(new GridLayout(3,2));
+	
+	JLabel titlename = new JLabel("Name: ");
+	JLabel titlemass = new JLabel("Mass: ");
+	JLabel titleradius = new JLabel("Radius: ");
+	JLabel name = new JLabel("");
+	JLabel mass = new JLabel("");
+	JLabel radius = new JLabel("");
+	
+	public void showData(Objects obj) {
+		
+		name.setText(obj.name);
+		mass.setText(String.valueOf(obj.mass));
+		radius.setText(String.valueOf(obj.radius));	
+	}
 	
 	ProjectMainFrame() throws HeadlessException {
 	  		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -61,21 +87,25 @@ public class ProjectMainFrame extends JFrame {
 	  		animel.add(bottom, BorderLayout.PAGE_END);
 	  		anipanel.setBackground(Color.black); 
 	  		
+	  		parameterespanel.add(titlename);
+	  		parameterespanel.add(name);
+	  		parameterespanel.add(titlemass);
+	  		parameterespanel.add(mass);
+	  		parameterespanel.add(titleradius);
+	  		parameterespanel.add(radius);
 	  		
-	  		Border border = BorderFactory.createLineBorder(Color.yellow, 2);
-	  		lstarplabel.setBorder(border);
-	  		lplanetplabel.setBorder(border); 
 	  		
-	  		//lstarplabel.setPreferredSize(new Dimension(150,100));
-	  		//planetList.setSize(new Dimension(150,10));
-	  		//lplanetplabel.setPreferredSize(new Dimension(150,100));
+	  		//Border border = BorderFactory.createLineBorder(Color.yellow, 2);
+	  		
+	  		
 	  		
 	  		sslider.addChangeListener(new SliderChangeListener());
 	  		
-	  		leftside.add(lstarlabel);
-	  		leftside.add(lstarplabel);
+	  		leftside.add(addobject);
+	  		addobject.addActionListener(new JButtonListener(this));
 	  		leftside.add(planetList);
-	  		leftside.add(lplanetplabel);
+	  		planetList.addActionListener(new JComboBoxListener(this));
+	  		leftside.add(parameterespanel);
 	  		leftside.add(Box.createRigidArea(new Dimension(0, 225)));
 	  		leftside.add(Box.createRigidArea(new Dimension(0, 150)));
 	  		
@@ -97,5 +127,45 @@ public class ProjectMainFrame extends JFrame {
 		}
 	}
 	
+	public class JComboBoxListener implements ActionListener {
+
+		ProjectMainFrame mainFrame = null;
+		
+		public JComboBoxListener(ProjectMainFrame mainFrame) {
+			
+			this.mainFrame = mainFrame;
+			
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			mainFrame.planetList.getSelectedIndex();
+			int index = mainFrame.planetList.getSelectedIndex();
+			
+			showData(mainFrame.objects.get(index));
+		}
+		
+	}
+	
+	public class JButtonListener implements ActionListener{
+		
+		ProjectMainFrame mainFrame = null;
+		
+		JButtonListener(ProjectMainFrame mainFrame){
+		this.mainFrame = mainFrame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (arg0.getActionCommand() == "Add an object")
+			{
+				
+				StarFrame frame = new StarFrame(mainFrame);
+				frame.setVisible(true);
+				
+				
+			}
+		}
+	}
+
 
 }

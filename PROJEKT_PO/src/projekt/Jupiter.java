@@ -14,12 +14,12 @@ import com.sun.j3d.utils.universe.*;
 
 public class Jupiter extends Applet{
 	
-	Color3f black = new Color3f(0.0f, 0.0f, 0.0f);
-	Color3f white = new Color3f(1.0f, 1.0f, 1.0f);
-	Color3f red = new Color3f(0.7f, .15f, .15f);
-	Color3f orange = new Color3f(1f, .5f, 0f);
-	Color3f orangem = new Color3f(0.89f, 0.47f, 0.2f);
-	Color3f color =  new Color3f(1f,0.498039f,0f);
+//	Color3f black = new Color3f(0.0f, 0.0f, 0.0f);
+//	Color3f white = new Color3f(1.0f, 1.0f, 1.0f);
+//	Color3f red = new Color3f(0.7f, .15f, .15f);
+//	Color3f orange = new Color3f(1f, .5f, 0f);
+//	Color3f orangem = new Color3f(0.89f, 0.47f, 0.2f);
+//	Color3f color =  new Color3f(1f,0.498039f,0f);
 
 	
 	
@@ -35,7 +35,7 @@ public class Jupiter extends Applet{
 		SimpleUniverse universe = new SimpleUniverse();
 		BranchGroup group = new BranchGroup();
 		
-		TextureLoader tloader = new TextureLoader("C:/Users/Filip/git/Repository/PROJEKT_PO/src/Textures/Jupiter.jpg", "LUMINANCE", new Container());
+		TextureLoader tloader = new TextureLoader("C:\\Users\\Marta\\git\\PROJEKT_PO\\src\\Textures\\Jupiter.jpg", "LUMINANCE", new Container());
 		Texture texture = tloader.getTexture();
 		texture.setBoundaryModeS(Texture.WRAP);
 		texture.setBoundaryModeT(Texture.WRAP);
@@ -48,7 +48,7 @@ public class Jupiter extends Applet{
 		texAttr.setTextureMode(TextureAttributes.MODULATE);
 		ap.setTextureAttributes(texAttr);
 		
-		ap.setMaterial(new Material(color, black, color, black, 1.0f));
+		ap.setMaterial(new Material());
 		
 		int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
 		

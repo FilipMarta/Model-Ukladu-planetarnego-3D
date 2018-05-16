@@ -4,7 +4,7 @@ public class ProjectMain {
 
 	public static void main(String[] args) {
 		
-		StartFrame startframe = new StartFrame();
+		ProjectMainFrame startframe = new ProjectMainFrame();
 		
 		startframe.setVisible(true);
 		

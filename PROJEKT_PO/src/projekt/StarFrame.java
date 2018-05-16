@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class StartFrame extends JFrame {
+public class StarFrame extends JFrame { //Marta
 
 	int WEIGHT = 280;
 	int HEIGHT = 180;
@@ -26,14 +26,15 @@ public class StartFrame extends JFrame {
 	
 	
 	JButton okbutton = new JButton("OK");
+	ProjectMainFrame mainFrame = null; 
 	
 	
-	
-	public StartFrame(){
+	public StarFrame(ProjectMainFrame mainFrame){
 		this.setSize(WEIGHT, HEIGHT);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setTitle("Set the parameters of your star");
 		
+		this.mainFrame = mainFrame; //przekazujemy obiekt
 		this.add(pagetitle, BorderLayout.PAGE_START);
 		this.add(toppanel, BorderLayout.CENTER);
   		this.add(bottompanel, BorderLayout.PAGE_END);
@@ -57,10 +58,11 @@ public class StartFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "OK")
 			{
-				StartFrame.this.setVisible(false);
+					Objects ob = new Objects(name.getText(), Double.parseDouble(mass.getText()), Double.parseDouble(radius.getText()));
+					mainFrame.addNewObject(ob);
+					
 				
-				ProjectMainFrame frame = new ProjectMainFrame();
-				frame.setVisible(true);
+				StarFrame.this.setVisible(false);
 				
 			}
 	}
