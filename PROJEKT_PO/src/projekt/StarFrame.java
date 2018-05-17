@@ -5,12 +5,19 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
+import javax.vecmath.Point3f;
+import javax.vecmath.Vector3f;
+
+import NewAnimation.AnimationPanel;
+import NewAnimation.Planet;
 
 public class StarFrame extends JFrame { //Marta
 
-	int WEIGHT = 500;
+	int WEIGHT = 800;
 	int HEIGHT = 200;
 	
 	JPanel pagetitle = new JPanel(new GridLayout(1,1));
@@ -19,14 +26,14 @@ public class StarFrame extends JFrame { //Marta
 	
 	JLabel title = new JLabel("Set parameters of celestial object:");
 	JLabel lname = new JLabel("Name: ");
-	JLabel lmass = new JLabel("Mass: ");
-	JLabel lradius = new JLabel("Radius: ");
-	JLabel lxlocation = new JLabel("X location: ");
-	JLabel lylocation = new JLabel("Y location: ");
-	JLabel lzlocation = new JLabel("Z location: ");
-	JLabel lxvelocity = new JLabel("X velocity: ");
-	JLabel lyvelocity = new JLabel("Y velocity: ");
-	JLabel lzvelocity = new JLabel("Z velocity: ");
+	JLabel lmass = new JLabel("Mass [kg*10^25]: ");
+	JLabel lradius = new JLabel("Radius [km]: ");
+	JLabel lxlocation = new JLabel("X location [km*10^8]: ");
+	JLabel lylocation = new JLabel("Y location [km*10^8]: ");
+	JLabel lzlocation = new JLabel("Z location [km*10^8]: ");
+	JLabel lxvelocity = new JLabel("X velocity [km/s]: ");
+	JLabel lyvelocity = new JLabel("Y velocity [km/s]: ");
+	JLabel lzvelocity = new JLabel("Z velocity [km/s]: ");
 	JTextField name = new JTextField();
 	JTextField mass = new JTextField();
 	JTextField radius = new JTextField();
@@ -39,7 +46,15 @@ public class StarFrame extends JFrame { //Marta
 	
 	
 	JButton okbutton = new JButton("OK");
-	JCheckBox starbutton = new JCheckBox("Star");
+	JCheckBox starbutton = new JCheckBox("Star?");
+	
+	JComboBox<String> texturebox = new JComboBox<String>();
+	String textures[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
+	String tex;
+	
+	
+	
+	
 	ProjectMainFrame mainFrame = null; 
 	
 	
@@ -75,9 +90,59 @@ public class StarFrame extends JFrame { //Marta
 	
 		starbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bottompanel.add(starbutton);
+		
+		for(int i=0;i<textures.length;i++) {
+			texturebox.addItem(textures[i]);
+		}
+		texturebox.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange()==ItemEvent.SELECTED) {
+					String iselected = (String)arg0.getItem();
+					switch(iselected) {
+				  	  case "Mercury":
+				  		  tex = "Mercury.jpg";
+				  		  break;
+				  	  case "Venus":
+				  		tex = "Venus.jpg";
+				  		  break;
+				  	  case "Earth":
+				  		  tex = "Earth.jpg";
+				  		  break;
+				  	  case "Mars":
+				  		  tex = "2k_mars.jpg";
+				  		  break;
+				  	  case "Jupiter":
+				  	  	tex = "Jupiter.jpg";
+				  	  	break;
+				  	  case "Saturn":
+				  		  tex = "Saturn.jpg";
+				  		  break;
+				  	  case "Uranus":
+				  		  tex = "Uranus.png";
+				  		  break;
+				  	  case "Neptune":
+				  		  tex = "2k_neptune.jpg";
+				  		  break;
+				  	  case "Pluto":
+				  		  tex = "Pluto.jpg";
+				  		  break;
+				  		  
+				  }
+				}
+				
+			}
+			
+		});
+		bottompanel.add(texturebox);
+		
+		
+		
+		
 		bottompanel.add(okbutton);
 		okbutton.addActionListener(new JButtonListener());
-	
+
 		
 	}
 	
@@ -86,12 +151,13 @@ public class StarFrame extends JFrame { //Marta
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "OK")
 			{
-					Objects ob = new Objects(name.getText(), Double.parseDouble(mass.getText()), Double.parseDouble(radius.getText()),
-							Double.parseDouble(xlocation.getText()), Double.parseDouble(ylocation.getText()), Double.parseDouble(zlocation.getText()), Double.parseDouble(xvelocity.getText()),	Double.parseDouble(yvelocity.getText()), Double.parseDouble(zvelocity.getText()), starbutton.isSelected());
+					Planet ob = new Planet(name.getText(), Float.parseFloat(radius.getText()), Float.parseFloat(mass.getText())/(float)Math.pow(10, 25),
+							new Point3f(Float.parseFloat(xlocation.getText())*(float)Math.pow(10, 8),Float.parseFloat(ylocation.getText())*(float)Math.pow(10, 8), Float.parseFloat(zlocation.getText())*(float)Math.pow(10, 8)),
+						new Vector3f(Float.parseFloat(xvelocity.getText()),	Float.parseFloat(yvelocity.getText()), Float.parseFloat(zvelocity.getText())));//, starbutton.isSelected());
+					ob.setTexture(tex);
 					mainFrame.addNewObject(ob);
-					
-				
-				StarFrame.this.setVisible(false);
+					mainFrame.anipanel.repaint();
+					StarFrame.this.setVisible(false);
 				
 			}
 	}

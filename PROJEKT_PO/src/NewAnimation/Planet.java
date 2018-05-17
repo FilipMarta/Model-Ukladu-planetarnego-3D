@@ -12,18 +12,18 @@ import com.sun.j3d.utils.image.*;
 
 public class Planet extends Sphere{
 	
-	String name;
-	float objectRadius;
-	float mass;
-	float orbitRadius;
-	Point3f position;
-	Vector3f velocity;
+	public String name;
+	public float objectRadius;
+	public float mass;
+	public float orbitRadius;
+	public Point3f position;
+	public Vector3f velocity;
 	
 	Appearance appearance;
 	Texture texture;
 	TextureAttributes texAtt;
 	
-	TransformGroup planetMovement = new TransformGroup();
+	public TransformGroup planetMovement = new TransformGroup();
 
 	
 	
@@ -44,7 +44,7 @@ public class Planet extends Sphere{
 	}
 	
 	
-	void setTexture(String filename) {
+	public void setTexture(String filename) {
 		texture = new TextureLoader("src/Textures/"+filename, null).getTexture();
 		appearance.setTexture(texture);
 	}
@@ -71,7 +71,7 @@ public class Planet extends Sphere{
 	}
 	
 	
-	Planet(String name, float objectRadius, float mass, Point3f position, Vector3f velocity) throws HeadlessException {
+	public Planet(String name, float objectRadius, float mass, Point3f position, Vector3f velocity) throws HeadlessException {
 		super(objectRadius/10000,Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS, 100);
 		
 		this.name = name;

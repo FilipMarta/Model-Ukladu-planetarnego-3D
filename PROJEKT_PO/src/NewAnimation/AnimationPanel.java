@@ -83,8 +83,8 @@ public class AnimationPanel extends JPanel{
 	
 	
 	
-	void addObject(Planet planet) {
-		planetList.add(planet);
+	public void addObject(Planet planet) {
+		//planetList.add(planet);
 		group.addChild(planet.getTransformGroup());
 	}
 	
@@ -121,56 +121,7 @@ public class AnimationPanel extends JPanel{
 		group.addChild(background);
 	}
 	
-	void makeSS() {
-		Planet mercury = new Planet("Mercury", 2439,(float)(3.3011*Math.pow(10, 23)), new Point3f(0,0,(float)(-6.982*Math.pow(10,7))), new Vector3f(38.86f,0,0));
-		mercury.setTexture("Mercury.jpg");
-		addObject(mercury);
-		
-		Planet venus = new Planet("Venus", 6051,(float)(4.867*Math.pow(10, 24)), new Point3f(0,0,(float)(-1.0894*Math.pow(10,8))), new Vector3f(34.78f,0,0));
-		venus.setTexture("Venus.jpg");
-		addObject(venus);
-		
-		Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
-		earth.setTexture("Earth.jpg");
-		addObject(earth);
-		
-		Planet mars = new Planet("Mars", 3389, (float)(6.4171*Math.pow(10,23)), new Point3f(0,0,(float)(-2.4923*Math.pow(10,8))), new Vector3f(21.97f,0,0));
-		mars.setTexture("2k_mars.jpg");
-		addObject(mars);
-		
-		Planet jupiter = new Planet("Jupiter", 69911, (float)(1.89819*Math.pow(10, 27)), new Point3f(0,0,(float)(-8.16*Math.pow(10,8))),new Vector3f(12.44f,0,0));
-		addObject(jupiter);
-		
-		Planet saturn = new Planet("Saturn", 58232, (float)(5.6834*Math.pow(10,26)), new Point3f(0,0,(float)(-1.51450*Math.pow(10,9))), new Vector3f(9.09f,0,0));
-		saturn.setTexture("Saturn.jpg");
-		
-		Appearance app = new Appearance();
-		Texture texture = new TextureLoader("src/Textures/saturn_rings.png", null).getTexture();
-		app.setTexture(texture);
-		TextureAttributes texAtt = new TextureAttributes();
-		texAtt.setTextureMode(TextureAttributes.MODULATE);
-		app.setTextureAttributes(texAtt);
-		//app.setMaterial(new Material());
-		TransparencyAttributes ta = new TransparencyAttributes(TransparencyAttributes.NICEST, 0f);
-		app.setTransparencyAttributes(ta);
-		Cylinder rings = new Cylinder(3f*saturn.objectRadius,0.1f, Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,100, 100, app);
-		saturn.planetMovement.addChild(rings);
-		
-		addObject(saturn);
-		
-		Planet uranus = new Planet("Uranus", 25362, (float)(8.6813*Math.pow(10,25)), new Point3f(0,0,(float)(-3.00362*Math.pow(10,9))), new Vector3f(6.49f,0,0));
-		uranus.setTexture("Uranus.png");
-		addObject(uranus);
-		
-		Planet neptune = new Planet("Neptune", 24622,(float)(1.02413*Math.pow(10, 26)), new Point3f(0,0,(float)(-4.54567*Math.pow(10,9))), new Vector3f(5.37f,0,0));
-		neptune.setTexture("2k_neptune.jpg");
-		addObject(neptune);
-		
-		Planet pluto = new Planet("Pluto", 1188,(float)(1.303*Math.pow(10, 22)), new Point3f(0,0,(float)(-7.375*Math.pow(10,9))), new Vector3f(3.7f,0,0));
-		pluto.setTexture("Pluto.jpg");
-		addObject(pluto);
-		
-	}
+
 	
 	void makeDisc() {
 		Appearance app = new Appearance();
@@ -191,8 +142,9 @@ public class AnimationPanel extends JPanel{
 	
 	void initObjects() {
 		sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)));
-
-		makeSS();
+		for(int i=0;i<planetList.size();i++) {
+			addObject(planetList.get(i));
+		}
 		
 //		Text2D text = new Text2D("lolz", new Color3f(Color.WHITE), "Arial", 400, Font.PLAIN);
 //		group.addChild(text);
@@ -209,7 +161,7 @@ public class AnimationPanel extends JPanel{
 	
 	
 	
-	public AnimationPanel() throws HeadlessException{
+	public AnimationPanel(ArrayList<Planet> p) throws HeadlessException{
 		
 		this.addKeyListener(camera);
 		this.setFocusable(true);
@@ -222,6 +174,7 @@ public class AnimationPanel extends JPanel{
 		this.setLayout(new BorderLayout());
 		this.add(canvas);
 		universe = new SimpleUniverse(canvas);
+		planetList = p;
 		
 		
 		initBackground();
@@ -248,10 +201,10 @@ public class AnimationPanel extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("AnimationPanel test");
 		
-		AnimationPanel apanel = new AnimationPanel();
+		//AnimationPanel apanel = new AnimationPanel(planetList);
 		
 		
-		frame.add(apanel, BorderLayout.CENTER);
+		//frame.add(apanel, BorderLayout.CENTER);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
