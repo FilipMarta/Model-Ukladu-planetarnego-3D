@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -36,20 +38,31 @@ public class Sketch2D extends JPanel{
 			g2d.setColor(Color.BLACK);
 			g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 			g2d.setColor(Color.WHITE);
-			g2d.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
+			
 			g2d.drawLine(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2);
+			g2d.drawString("x", this.getWidth()-10, this.getHeight()/2-10);
+			g2d.drawString(">", this.getWidth()-8, this.getHeight()/2+5);
+			
+			g2d.drawLine(this.getWidth()/2+2, 0, this.getWidth()/2+2, this.getHeight());
+			g2d.drawString("z", this.getWidth()/2+12, this.getHeight()-10);
+			g2d.drawString("V", this.getWidth()/2-1, this.getHeight());
+			
+			for(int i=0; i<20;i++) {
+				g2d.drawString("_", this.getWidth()/2-1, (this.getHeight()-2)*i/20);
+				g2d.drawString("|", (this.getWidth()+2)*i/20, this.getHeight()/2+4);
+			}
 			
 			if(list.size()>0) {
-				maxdistance = list.get(0).position.x;
-				if(list.get(0).position.z>maxdistance) {
-					maxdistance = list.get(0).position.z;
+				maxdistance = Math.abs(list.get(0).position.x);
+				if(Math.abs(list.get(0).position.z)>maxdistance) {
+					maxdistance = Math.abs(list.get(0).position.z);
 				}
 				for(int i=0; i<list.size();i++) {
-					if(list.get(i).position.x>maxdistance) {
-					maxdistance = list.get(i).position.x;
+					if(Math.abs(list.get(i).position.x)>maxdistance) {
+						maxdistance = Math.abs(list.get(i).position.x);
 					}
-					if(list.get(i).position.z>maxdistance) {
-					maxdistance = list.get(i).position.z;
+					else if(Math.abs(list.get(i).position.z)>maxdistance) {
+						maxdistance = Math.abs(list.get(i).position.z);
 					}
 				}
 				if(this.getHeight()>this.getWidth()) {
@@ -59,12 +72,29 @@ public class Sketch2D extends JPanel{
 					A = (float) (0.9*this.getHeight()/2)/maxdistance;
 				}
 				for(int i=0;i<list.size();i++) {
-					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)+10, this.getHeight()/2+(int)(list.get(i).position.z*A)-10);
-					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 10, 10);
+					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)-15, this.getHeight()/2+(int)(list.get(i).position.z*A)-5);
+					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 5, 5);
 
 				}
-				
+				System.out.println(maxdistance);
+//				DecimalFormat df=new DecimalFormat("0.00");
+//				String xdigformate = df.format(this.getWidth()/A/20); 
+//				String zdigformate = df.format(this.getHeight()/A/20);
+//					double xdig;
+//					double zdig;
+//					try {
+//						xdig = (double)df.parse(xdigformate);
+//						g2d.drawString(Double.toString(xdig), this.getWidth()*11/20,this.getHeight()/2-10);
+//						zdig = (double) df.parse(zdigformate);
+//						g2d.drawString(Double.toString(zdig), this.getWidth()/2+10,this.getHeight()*11/20+5);
+//					} catch (ParseException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+
 			}
+			
+			
 			//g2d.fillOval(100, 100, 10, 10);
 			
 		}

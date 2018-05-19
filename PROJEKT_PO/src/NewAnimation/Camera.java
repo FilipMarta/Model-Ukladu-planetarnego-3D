@@ -171,13 +171,20 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 
 		
 		if(e.getKeyCode()==KeyEvent.VK_SHIFT) {shft=true;}
-		if(e.getKeyChar()=='w') {w=true;}
-		if(e.getKeyChar()=='s') {s=true;}
-		if(e.getKeyChar()=='a') {a=true;}
-		if(e.getKeyChar()=='d') {d=true;}
-		if(e.getKeyChar()==' ') {spc=true;}
+		if(e.getKeyCode()==KeyEvent.VK_W) {w=true;}
+		if(e.getKeyCode()==KeyEvent.VK_S) {s=true;}
+		if(e.getKeyCode()==KeyEvent.VK_A) {a=true;}
+		if(e.getKeyCode()==KeyEvent.VK_D) {d=true;}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {spc=true;}
 		if(e.getKeyCode()==KeyEvent.VK_CONTROL) {ctrl=true;}
-		
+		if(e.getKeyCode()==KeyEvent.VK_P) {
+			if(panel.thread.timer.isRunning()) {
+					panel.thread.timer.stop();
+			}
+			else {
+				panel.thread.timer.start();
+			}
+		}
 		
 		
 		if(threadworks==false) {
@@ -190,11 +197,11 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyChar()=='w') {w=false;}
-		if(e.getKeyChar()=='s') {s=false;}
-		if(e.getKeyChar()=='a') {a=false;}
-		if(e.getKeyChar()=='d') {d=false;}
-		if(e.getKeyChar()==' ') {spc=false;}
+		if(e.getKeyCode()==KeyEvent.VK_W) {w=false;}
+		if(e.getKeyCode()==KeyEvent.VK_S) {s=false;}
+		if(e.getKeyCode()==KeyEvent.VK_A) {a=false;}
+		if(e.getKeyCode()==KeyEvent.VK_D) {d=false;}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {spc=false;}
 		if(e.getKeyCode()==KeyEvent.VK_CONTROL) {ctrl=false;}
 		if(e.getKeyCode()==KeyEvent.VK_SHIFT) {shft=false;}
 		

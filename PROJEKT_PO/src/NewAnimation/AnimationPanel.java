@@ -20,12 +20,12 @@ import com.sun.j3d.utils.universe.*;
 public class AnimationPanel extends JPanel{
 
 	SimpleUniverse universe;
-	BranchGroup group = new BranchGroup();
+	public BranchGroup group = new BranchGroup();
 	
 	BoundingSphere bounds = new BoundingSphere(new Point3d(0,0,0), 10000);
 	
 	Camera camera = new Camera(this);
-	AnimationThread thread;
+	public AnimationThread thread;
 	
 	TransformGroup cameraTransformGroup;
 	
@@ -58,8 +58,8 @@ public class AnimationPanel extends JPanel{
             double t = camera.tetha+camera.tetha_tmp;
             
             this.getGraphics2D().setColor(Color.red);
-            x2=x1-(int)(100*Math.cos(p));
-            y2=y1-(int)(100*Math.sin(p)*Math.sin(t));
+            x2=x1+(int)(100*Math.cos(p));
+            y2=y1+(int)(100*Math.sin(p)*Math.sin(t));
             this.getGraphics2D().drawString("x", x2-5, y2-5);
             this.getGraphics2D().drawLine(x1, y1, x2, y2);
             
@@ -70,8 +70,8 @@ public class AnimationPanel extends JPanel{
             this.getGraphics2D().drawLine(x1, y1,x2 , y2);
             
             this.getGraphics2D().setColor(Color.green);
-            x2=x1-(int)(100*Math.sin(p));
-            y2=y1-(int)(-100*Math.cos(p)*Math.sin(t));
+            x2=x1+(int)(100*Math.sin(p));
+            y2=y1+(int)(-100*Math.cos(p)*Math.sin(t));
             this.getGraphics2D().drawString("z", x2-5, y2-5);
             this.getGraphics2D().drawLine(x1, y1, x2, y2);
             
@@ -141,7 +141,6 @@ public class AnimationPanel extends JPanel{
 	}
 	
 	void initObjects() {
-		sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)));
 		for(int i=0;i<planetList.size();i++) {
 			addObject(planetList.get(i));
 		}
@@ -154,7 +153,7 @@ public class AnimationPanel extends JPanel{
 		//Planet object = new Planet("NONAME", 6000,(float)(6*Math.pow(10, 24)), new Point3f((float)(2*Math.pow(10,8)),0,0), new Vector3f(10,0,-15f));
 		//addObject(object);
 		
-		group.addChild(sun);
+//		group.addChild(sun.getTransformGroup());
 	}
 	
 	
@@ -170,6 +169,9 @@ public class AnimationPanel extends JPanel{
 		canvas.addMouseListener(camera);
 		canvas.addMouseMotionListener(camera);
 		
+		group.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		group.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
+		group.setCapability(BranchGroup.ALLOW_DETACH);
 		
 		this.setLayout(new BorderLayout());
 		this.add(canvas);
@@ -185,8 +187,8 @@ public class AnimationPanel extends JPanel{
 		universe.addBranchGraph(group);
 		initCamera();
 		
-		thread = new AnimationThread(planetList, sun);
-		thread.start();
+		thread = new AnimationThread(planetList);
+		//thread.start();
 		
 	}
 	

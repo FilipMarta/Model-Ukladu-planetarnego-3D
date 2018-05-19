@@ -18,8 +18,9 @@ public class Planet extends Sphere{
 	public float orbitRadius;
 	public Point3f position;
 	public Vector3f velocity;
+	public Boolean starornot = false;
 	
-	Appearance appearance;
+	public Appearance appearance;
 	Texture texture;
 	TextureAttributes texAtt;
 	
@@ -76,11 +77,12 @@ public class Planet extends Sphere{
 		
 		this.name = name;
 		this.objectRadius = objectRadius/10000;
-		this.mass = toLocal(mass);
+		this.mass = (float) (mass/Math.pow(10,32));
 		this.position = new Point3f(toLocal(position.x),toLocal(position.y),toLocal(position.z));
 		computeRadius();
 		this.velocity = new Vector3f(toLocal(velocity.x), toLocal(velocity.y),toLocal(velocity.z));
 		
+		planetMovement.setCapability(BranchGroup.ALLOW_DETACH);
 		
 		appearance = new Appearance();
 		setTexture("Jupiter.jpg");
@@ -98,5 +100,25 @@ public class Planet extends Sphere{
 		this.setAppearance(appearance);
 		//System.out.println(position.x/Math.pow(10, 7));
 		
+	}
+	public Planet(Planet p) {
+		super(p.objectRadius,Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS, 100);
+		this.name = p.name;
+		this.objectRadius = p.objectRadius;
+		this.mass = p.mass;
+		this.position = p.position;
+		computeRadius();
+		this.velocity = p.velocity;
+		
+		planetMovement.setCapability(BranchGroup.ALLOW_DETACH);
+		
+		appearance = p.appearance;
+	
+		
+
+		planetMovement.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		planetMovement.addChild(this);
+		this.move();
+		this.setAppearance(appearance);
 	}
 }

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
+import javax.media.j3d.TransformGroup;
 import javax.media.j3d.TransparencyAttributes;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -40,11 +43,12 @@ public class ProjectMainFrame extends JFrame {
 	
 	JPanel leftside = new JPanel();
 	JPanel animel = new JPanel(new BorderLayout());
-	Sketch2D anipanel = new Sketch2D(objects); //Filip
+	Sketch2D sketchpanel = new Sketch2D(objects); //Filip
 	JPanel bottom = new JPanel();
 	
 	AnimationPanel apanel = null;
-	Boolean SSSelected = false;
+	int indexofSS;
+	
 	
 	ArrayList<String> planets = new ArrayList<String>();
 	
@@ -56,14 +60,12 @@ public class ProjectMainFrame extends JFrame {
 	
 
 	
-	
-	JSlider sslider = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
-	JLabel speed = new JLabel(String.format("Animation speed: %d", sslider.getValue()));
-	
+		
 	
 	JButton play = new JButton("Play");
 	JCheckBox playsolarsystem = new JCheckBox("Play/add Solar System Simulation");
 	JButton reverse = new JButton("Reverse");
+
 	
 	public void addNewObject(Planet p) {
 		
@@ -109,62 +111,75 @@ public class ProjectMainFrame extends JFrame {
 		xvelocity.setText(String.valueOf(obj.velocity.x));	
 		yvelocity.setText(String.valueOf(obj.velocity.y));
 		zvelocity.setText(String.valueOf(obj.velocity.z));	
-		//starornot.setText(String.valueOf(obj.starornot));
+		starornot.setText(String.valueOf(obj.starornot));
 		
 	}
 	
+	
 	void makeSS() {
-			Planet mercury = new Planet("Mercury", 2439,(float)(3.3011*Math.pow(10, 23)), new Point3f(0,0,(float)(-6.982*Math.pow(10,7))), new Vector3f(38.86f,0,0));
-			mercury.setTexture("Mercury.jpg");
-			addNewObject(mercury);
-			
-			Planet venus = new Planet("Venus", 6051,(float)(4.867*Math.pow(10, 24)), new Point3f(0,0,(float)(-1.0894*Math.pow(10,8))), new Vector3f(34.78f,0,0));
-			venus.setTexture("Venus.jpg");
-			addNewObject(venus);
-			
-			Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
-			earth.setTexture("Earth.jpg");
-			addNewObject(earth);
-			
-			Planet mars = new Planet("Mars", 3389, (float)(6.4171*Math.pow(10,23)), new Point3f(0,0,(float)(-2.4923*Math.pow(10,8))), new Vector3f(21.97f,0,0));
-			mars.setTexture("2k_mars.jpg");
-			addNewObject(mars);
-			
-			Planet jupiter = new Planet("Jupiter", 69911, (float)(1.89819*Math.pow(10, 27)), new Point3f(0,0,(float)(-8.16*Math.pow(10,8))),new Vector3f(12.44f,0,0));
-			addNewObject(jupiter);
-			
-			Planet saturn = new Planet("Saturn", 58232, (float)(5.6834*Math.pow(10,26)), new Point3f(0,0,(float)(-1.51450*Math.pow(10,9))), new Vector3f(9.09f,0,0));
-			saturn.setTexture("Saturn.jpg");
-			
-			Appearance app = new Appearance();
-			Texture texture = new TextureLoader("src/Textures/saturn_rings.png", null).getTexture();
-			app.setTexture(texture);
-			TextureAttributes texAtt = new TextureAttributes();
-			texAtt.setTextureMode(TextureAttributes.MODULATE);
-			app.setTextureAttributes(texAtt);
-			//app.setMaterial(new Material());
-			TransparencyAttributes ta = new TransparencyAttributes(TransparencyAttributes.NICEST, 0f);
-			app.setTransparencyAttributes(ta);
-			Cylinder rings = new Cylinder(3f*saturn.objectRadius,0.1f, Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,100, 100, app);
-			saturn.planetMovement.addChild(rings);
-			addNewObject(saturn);
-			
-			Planet uranus = new Planet("Uranus", 25362, (float)(8.6813*Math.pow(10,25)), new Point3f(0,0,(float)(-3.00362*Math.pow(10,9))), new Vector3f(6.49f,0,0));
-			uranus.setTexture("Uranus.png");
-			addNewObject(uranus);
-			
-			Planet neptune = new Planet("Neptune", 24622,(float)(1.02413*Math.pow(10, 26)), new Point3f(0,0,(float)(-4.54567*Math.pow(10,9))), new Vector3f(5.37f,0,0));
-			neptune.setTexture("2k_neptune.jpg");
-			addNewObject(neptune);
-			
-			Planet pluto = new Planet("Pluto", 1188,(float)(1.303*Math.pow(10, 22)), new Point3f(0,0,(float)(-7.375*Math.pow(10,9))), new Vector3f(3.7f,0,0));
-			pluto.setTexture("Pluto.jpg");
-			addNewObject(pluto);
-			
 		
+		Thread tmpthread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				
+				
+				Planet mercury = new Planet("Mercury", 2439,(float)(3.3011*Math.pow(10, 23)), new Point3f(0,0,(float)(-6.982*Math.pow(10,7))), new Vector3f(38.86f,0,0));
+				mercury.setTexture("Mercury.jpg");
+				addNewObject(mercury);
+				
+				Planet venus = new Planet("Venus", 6051,(float)(4.867*Math.pow(10, 24)), new Point3f(0,0,(float)(-1.0894*Math.pow(10,8))), new Vector3f(34.78f,0,0));
+				venus.setTexture("Venus.jpg");
+				addNewObject(venus);
+				
+				Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
+				earth.setTexture("Earth.jpg");
+				addNewObject(earth);
+				
+				Planet mars = new Planet("Mars", 3389, (float)(6.4171*Math.pow(10,23)), new Point3f(0,0,(float)(-2.4923*Math.pow(10,8))), new Vector3f(21.97f,0,0));
+				mars.setTexture("2k_mars.jpg");
+				addNewObject(mars);
+				
+				Planet jupiter = new Planet("Jupiter", 69911, (float)(1.89819*Math.pow(10, 27)), new Point3f(0,0,(float)(-8.16*Math.pow(10,8))),new Vector3f(12.44f,0,0));
+				addNewObject(jupiter);
+				
+				Planet saturn = new Planet("Saturn", 58232, (float)(5.6834*Math.pow(10,26)), new Point3f(0,0,(float)(-1.51450*Math.pow(10,9))), new Vector3f(9.09f,0,0));
+				saturn.setTexture("Saturn.jpg");
+				
+				Appearance app = new Appearance();
+				Texture texture = new TextureLoader("src/Textures/saturn_rings.png", null).getTexture();
+				app.setTexture(texture);
+				TextureAttributes texAtt = new TextureAttributes();
+				texAtt.setTextureMode(TextureAttributes.MODULATE);
+				app.setTextureAttributes(texAtt);
+				//app.setMaterial(new Material());
+				TransparencyAttributes ta = new TransparencyAttributes(TransparencyAttributes.NICEST, 0f);
+				app.setTransparencyAttributes(ta);
+				Cylinder rings = new Cylinder(3f*saturn.objectRadius,0.1f, Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,100, 100, app);
+				saturn.planetMovement.addChild(rings);
+				addNewObject(saturn);
+				
+				Planet uranus = new Planet("Uranus", 25362, (float)(8.6813*Math.pow(10,25)), new Point3f(0,0,(float)(-3.00362*Math.pow(10,9))), new Vector3f(6.49f,0,0));
+				uranus.setTexture("Uranus.png");
+				addNewObject(uranus);
+				
+				Planet neptune = new Planet("Neptune", 24622,(float)(1.02413*Math.pow(10, 26)), new Point3f(0,0,(float)(-4.54567*Math.pow(10,9))), new Vector3f(5.37f,0,0));
+				neptune.setTexture("2k_neptune.jpg");
+				addNewObject(neptune);
+				
+				Planet pluto = new Planet("Pluto", 1188,(float)(1.303*Math.pow(10, 22)), new Point3f(0,0,(float)(-7.375*Math.pow(10,9))), new Vector3f(3.7f,0,0));
+				pluto.setTexture("Pluto.jpg");
+				addNewObject(pluto);
+				sketchpanel.repaint();
+				
+			}
+			
+		});
+		
+		tmpthread.start();
 		}
 	ProjectMainFrame() throws HeadlessException {
-	  		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	  		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  		this.setSize(800,600);
 	  		this.setBackground(Color.black);
 	  		
@@ -172,10 +187,13 @@ public class ProjectMainFrame extends JFrame {
 	  		menubar.add(file);
 	  		file.add(save);
 	  		
-	  		this.add(leftside, BorderLayout.LINE_START);
+	  		
 	  		leftside.setLayout(new BoxLayout(leftside, BoxLayout.Y_AXIS));
+	  		leftside.setPreferredSize(new Dimension(200, this.getHeight()));
+	  		this.add(leftside, BorderLayout.LINE_START);
+	  		
 	  		this.add(animel, BorderLayout.CENTER);
-	  		animel.add(anipanel, BorderLayout.CENTER);
+	  		animel.add(sketchpanel, BorderLayout.CENTER);
 	  		animel.add(bottom, BorderLayout.PAGE_END);
 	  		
 	  		
@@ -200,7 +218,6 @@ public class ProjectMainFrame extends JFrame {
 	  		parameterespanel.add(titlestarornot);
 	  		parameterespanel.add(starornot);
 
-	  		sslider.addChangeListener(new SliderChangeListener());
 	  		
 	  		addobject.setAlignmentX(Component.CENTER_ALIGNMENT);
 	  		leftside.add(addobject);
@@ -224,16 +241,83 @@ public class ProjectMainFrame extends JFrame {
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setTitle("AnimationPanel test");
 					
+					Star sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)), new Point3f(0,0,0), new Vector3f(0,0,0));
+					addNewObject(sun);
+//					Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
+//					earth.setTexture("Earth.jpg");
+//					addNewObject(earth);
+
 					
-					if(SSSelected) {
-						makeSS();
-					}
 					apanel = new AnimationPanel(objects);
 					frame.add(apanel, BorderLayout.CENTER);
 					
 					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 					frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 					
+					
+					frame.addWindowListener(new WindowListener() {
+
+						@Override
+						public void windowOpened(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void windowClosing(WindowEvent e) {
+							apanel.thread.timer.stop();
+							apanel=null;
+//							for(int i=0;i<objects.size();i++) {
+//								objects.get(i).planetMovement.removeChild(objects.get(i));
+//								objects.get(i).planetMovement=new TransformGroup();
+//								objects.get(i).planetMovement.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+//								objects.get(i).planetMovement.addChild(objects.get(i));
+//							}
+							ArrayList<Planet> tmplist = new ArrayList<Planet>();
+							for(int i=0;i<objects.size();i++) {
+								if(objects.get(i).starornot) {
+									tmplist.add(new Star((Star) objects.get(i)));
+								}
+								else {
+									tmplist.add(new Planet(objects.get(i)));
+								}
+								
+							}
+							objects=tmplist;
+							
+						}
+
+						@Override
+						public void windowClosed(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void windowIconified(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void windowDeiconified(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void windowActivated(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void windowDeactivated(WindowEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+					});
 					
 					frame.setVisible(true);
 					
@@ -245,10 +329,15 @@ public class ProjectMainFrame extends JFrame {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					if(arg0.getStateChange()==ItemEvent.SELECTED) {
-						SSSelected = true;
+						indexofSS = objects.size();
+						makeSS();
+						
 					}
 					else {
-						SSSelected = false;
+						for(int i=0;i<9;i++) {
+							objects.remove(indexofSS);
+							sketchpanel.repaint();
+						}
 					}
 					
 				}
@@ -259,13 +348,6 @@ public class ProjectMainFrame extends JFrame {
 	  		
 	}
 	
-	public class SliderChangeListener implements ChangeListener{
-		
-		public void stateChanged(ChangeEvent arg0) {
-			String value = String.format("Animation speed: %d", sslider.getValue());
-			speed.setText(value);
-		}
-	}
 	
 	public class JComboBoxListener implements ActionListener {
 
