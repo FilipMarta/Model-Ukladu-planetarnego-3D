@@ -77,7 +77,10 @@ public class ProjectMainFrame extends JFrame {
 		
 	}
 	
+	int nothing;
+	
 	public void modifyData(Planet p) {
+		
 		
 		Planet ob = null;
 		Planet newob = null;
