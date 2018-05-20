@@ -90,6 +90,7 @@ public class ProjectMainFrame extends JFrame {
 			starframe.ob = newob;
 		}
 	}
+	
 
 	JPanel parameterespanel = new JPanel(new GridLayout(15,1));
 	
