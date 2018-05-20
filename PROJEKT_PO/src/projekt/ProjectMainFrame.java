@@ -77,18 +77,23 @@ public class ProjectMainFrame extends JFrame {
 		
 	}
 
+	int selectedindex = -1;
 	
-	public void modifyData(Planet p) {
+	public void refreshObject(Planet p) {
 		
-		Planet ob = null;
-		Planet newob = null;
-		int index = planetList.getSelectedIndex();
+		objects.set(selectedindex, p);
+		
+	}
+	
+	public void modifyData() {
+		
+		selectedindex = planetList.getSelectedIndex();
 		if(planetList.isValid()) {
 		
-
 			StarFrame starframe = new StarFrame(this);
-			ob = objects.set(index, p);
-			starframe.ob = p;
+	
+			starframe.ob = objects.get(selectedindex);
+			starframe.updateData();
 			starframe.setVisible(true);
 			
 		}
@@ -423,10 +428,9 @@ public class ProjectMainFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "Modify an object")
 			{
-
-				Planet ob = null;
 				
-        		mainFrame.modifyData(ob);
+				//Planet p;
+        		mainFrame.modifyData();
                 //sketchpanel.repaint();
 	}
 }

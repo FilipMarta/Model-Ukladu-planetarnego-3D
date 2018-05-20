@@ -59,16 +59,24 @@ public class StarFrame extends JFrame { //Marta
 	
 	ProjectMainFrame mainFrame = null; 
 	
-//	public void modifyData(Planet p) {
-//		
-//		Planet ob = planetList.getSelectedIndex();
-//		Planet newob = null;
-//		StarFrame starframe = new StarFrame(mainFrame);
-//		
-//			starframe.setVisible(true);
-//			this.ob = newob;
-//		
-//	}
+	Boolean updaterequest = false; 
+	
+	public void updateData() {
+		
+		name.setText(ob.name);
+		mass.setText(String.valueOf(ob.mass));
+		radius.setText(String.valueOf(ob.objectRadius));
+		xlocation.setText(String.valueOf(ob.position.x));
+		ylocation.setText(String.valueOf(ob.position.y));
+		zlocation.setText(String.valueOf(ob.position.z));
+		xvelocity.setText(String.valueOf(ob.velocity.x));
+		yvelocity.setText(String.valueOf(ob.velocity.y));
+		zvelocity.setText(String.valueOf(ob.velocity.z));
+		starbutton.setSelected(ob.starornot);
+		
+		updaterequest = true;
+		
+	}
 	
 	public StarFrame(ProjectMainFrame mainFrame){
 		this.setSize(WEIGHT, HEIGHT);
@@ -191,10 +199,18 @@ public class StarFrame extends JFrame { //Marta
 						new Vector3f(Float.parseFloat(xvelocity.getText()),	Float.parseFloat(yvelocity.getText()), Float.parseFloat(zvelocity.getText())));//, starbutton.isSelected());
 					ob.setTexture(tex);
 				}
+				
+				if(updaterequest == false) {
 				mainFrame.addNewObject(ob);
 				mainFrame.sketchpanel.repaint();
 				StarFrame.this.setVisible(false);
 				mainFrame.showData(ob);
+				}
+				else {
+					mainFrame.refreshObject(ob);
+					StarFrame.this.setVisible(false);
+					mainFrame.showData(ob);
+				}
 			}
 	}
 }
