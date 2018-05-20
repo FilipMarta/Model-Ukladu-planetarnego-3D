@@ -10,8 +10,6 @@ import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.image.*;
 
-import projekt.StarFrame;
-
 public class Planet extends Sphere{
 	
 	public String name;
@@ -123,8 +121,4 @@ public class Planet extends Sphere{
 		this.move();
 		this.setAppearance(appearance);
 	}
-
-
-		
-	
 }

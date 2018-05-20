@@ -185,7 +185,8 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 				panel.thread.timer.start();
 			}
 		}
-		
+		if(e.getKeyCode()==107) {panel.thread.speed+=0.2;}
+		if(e.getKeyCode()==109) {panel.thread.speed-=0.2;}
 		
 		if(threadworks==false) {
 			threadworks=true;

@@ -14,11 +14,12 @@ import com.sun.j3d.utils.geometry.Cylinder;
 public class AnimationThread implements ActionListener{
 	
 	ArrayList<Planet> list;
-	final static double G = 6.67*Math.pow(10, -11);
-	double dt=86400;
-	int time=0;
+	final static double G = 6.67408*Math.pow(10, -11);
+	float dt=86400/2;
+	float time=0;
+	float speed=1;
 	
-	public Timer timer= new Timer(20,this);
+	public Timer timer= new Timer(10,this);
 	
 	AnimationThread(ArrayList<Planet> list){
 		this.list=list;
@@ -97,7 +98,7 @@ public class AnimationThread implements ActionListener{
 	
 	
 	void computePosition() {
-		
+		float t=dt*speed;
 		for(int i=0;i<list.size();i++) {
 			Vector3f a = new Vector3f(0,0,0);
 			Planet p = list.get(i);
@@ -111,9 +112,9 @@ public class AnimationThread implements ActionListener{
 			}
 			
 			
-			p.position.x=(float) (p.position.x+p.velocity.x*dt+a.x/2*dt*dt);				
-			p.position.y=(float) (p.position.y+p.velocity.y*dt+a.y/2*dt*dt);			
-			p.position.z=(float) (p.position.z+p.velocity.z*dt+a.z/2*dt*dt);
+			p.position.x=(float) (p.position.x+p.velocity.x*t+a.x/2*t*t);				
+			p.position.y=(float) (p.position.y+p.velocity.y*t+a.y/2*t*t);			
+			p.position.z=(float) (p.position.z+p.velocity.z*t+a.z/2*t*t);
 			
 			Vector3f a2 =  new Vector3f(0,0,0);
 			
@@ -125,9 +126,9 @@ public class AnimationThread implements ActionListener{
 				}
 			}
 
-			p.velocity.x=(float) (p.velocity.x+(a.x+a2.x)*dt/2);
-			p.velocity.y=(float) (p.velocity.y+(a.y+a2.y)*dt/2);
-			p.velocity.z=(float) (p.velocity.z+(a.z+a2.z)*dt/2);
+			p.velocity.x=(float) (p.velocity.x+(a.x+a2.x)*t/2);
+			p.velocity.y=(float) (p.velocity.y+(a.y+a2.y)*t/2);
+			p.velocity.z=(float) (p.velocity.z+(a.z+a2.z)*t/2);
 
 			
 		}
@@ -145,7 +146,7 @@ public class AnimationThread implements ActionListener{
 
 			computePosition();
 			moveObjects();
-			time+=1;
+			time+=1*speed;
 
 	}
 	

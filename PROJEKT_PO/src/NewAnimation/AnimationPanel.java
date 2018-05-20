@@ -38,6 +38,8 @@ public class AnimationPanel extends JPanel{
 	{
         public void postRender()
         {
+        	DecimalFormat df=new DecimalFormat("0.00");
+        	
         	this.getGraphics2D().setColor(Color.white);
         	this.getGraphics2D().drawString(camera.position(),1,15);
         	this.getGraphics2D().drawString(camera.vector(),1,30);
@@ -46,8 +48,8 @@ public class AnimationPanel extends JPanel{
         	this.getGraphics2D().drawRect(1, 70, 120, 20);
         	this.getGraphics2D().drawString("Angle Disk ON/OFF",5,85);
         	this.getGraphics2D().drawString("Speed: 1s = 50 days",1,110);
-        	this.getGraphics2D().drawString("Timer: "+Integer.toString(thread.time)+" days",1,130);
-            
+        	this.getGraphics2D().drawString("Timer: "+df.format(thread.time)+" days",1,130);
+        	this.getGraphics2D().drawString("Symulation Speed: "+df.format(thread.speed)+"x",1,150);
             
             int x1 = canvas.getWidth()-120;
             int y1 = 120;
@@ -98,11 +100,11 @@ public class AnimationPanel extends JPanel{
 	void initLights() {
 		
 		
-		PointLight plight = new PointLight();
-        plight.setColor(new Color3f(Color.WHITE));
-        plight.setPosition(0.0f,0.0f,0.0f);
-        plight.setInfluencingBounds(bounds);
-        group.addChild(plight);
+//		PointLight plight = new PointLight();
+//        plight.setColor(new Color3f(Color.WHITE));
+//        plight.setPosition(0.0f,0.0f,0.0f);
+//        plight.setInfluencingBounds(bounds);
+//        group.addChild(plight);
         
         
         AmbientLight alight = new AmbientLight();
@@ -203,10 +205,9 @@ public class AnimationPanel extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("AnimationPanel test");
 		
-		//AnimationPanel apanel = new AnimationPanel(planetList);
-		
-		
-		//frame.add(apanel, BorderLayout.CENTER);
+//		AnimationPanel apanel = new AnimationPanel(planetList);
+//		
+//		frame.add(apanel, BorderLayout.CENTER);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
