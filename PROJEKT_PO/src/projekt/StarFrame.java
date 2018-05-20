@@ -54,11 +54,21 @@ public class StarFrame extends JFrame { //Marta
 	String tex = "Mercury.jpg";
 	
 	Boolean starornot=false;
-	
-	
+
+	Planet ob;
 	
 	ProjectMainFrame mainFrame = null; 
 	
+//	public void modifyData(Planet p) {
+//		
+//		Planet ob = planetList.getSelectedIndex();
+//		Planet newob = null;
+//		StarFrame starframe = new StarFrame(mainFrame);
+//		
+//			starframe.setVisible(true);
+//			this.ob = newob;
+//		
+//	}
 	
 	public StarFrame(ProjectMainFrame mainFrame){
 		this.setSize(WEIGHT, HEIGHT);
@@ -90,6 +100,9 @@ public class StarFrame extends JFrame { //Marta
 		toppanel.add(lzvelocity);
 		toppanel.add(zvelocity);
 	
+		
+		
+		
 		starbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		starbutton.addItemListener(new ItemListener() {
 

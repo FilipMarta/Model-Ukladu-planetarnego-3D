@@ -39,6 +39,7 @@ public class ProjectMainFrame extends JFrame {
 	JMenuBar menubar = new JMenuBar();
 	JMenu file = new JMenu("File");
 	JMenuItem save = new JMenuItem("Save Configuration");
+	JMenuItem importing = new JMenuItem("Import Configuration");
 
 	ArrayList<Planet> objects = new ArrayList<Planet>();
 	
@@ -53,13 +54,13 @@ public class ProjectMainFrame extends JFrame {
 	
 	ArrayList<String> planets = new ArrayList<String>();
 	
-	JButton addobject = new JButton("Add an object");
+	JButton addobject = new JButton("   Add an object  ");
+	JButton modifyobject = new JButton("Modify an object");
+	JButton deleteobject = new JButton("Delete an object");
 	
 	JComboBox<Object> planetList = new JComboBox<Object>(planets.toArray());
 	
 	//JLabel lstarlabel = new JLabel("Object"); //l od left (dla Filipa)
-	
-
 	
 		
 	
@@ -76,18 +77,26 @@ public class ProjectMainFrame extends JFrame {
 		
 	}
 	
+	public void modifyData(Planet p) {
+		
+		Planet ob = null;
+		Planet newob = null;
+		int index = planetList.getSelectedIndex();
+		if(planetList.isValid()) {
+		
+			ob = objects.set(index, p);
+			StarFrame starframe = new StarFrame(this);
+			starframe.setVisible(true);
+			starframe.ob = newob;
+		}
+	}
+
 	JPanel parameterespanel = new JPanel(new GridLayout(15,1));
 	
 	DecimalFormat df=new DecimalFormat("0.00");
 	JLabel titlename = new JLabel("Name: ");
-	JLabel titleradius = new JLabel(" Radius[km]: ");
+	JLabel titleradius = new JLabel("Radius[km]: ");
 	JLabel titlemass = new JLabel(" Mass[kg*10^25]: ");
-//	JLabel titlexlocation = new JLabel("X location[km*10^8]: ");
-//	JLabel titleylocation = new JLabel(" Y location[km*10^8]: ");
-//	JLabel titlezlocation = new JLabel(" Z location[km*10^8]: ");
-//	JLabel titlexvelocity = new JLabel("X velocity[km/s]: ");
-//	JLabel titleyvelocity = new JLabel(" Y velocity[km/s]: ");
-//	JLabel titlezvelocity = new JLabel(" Z velocity[km/s]: ");
 	JLabel titlelocation = new JLabel("Location[km*10^8]: ");
 	JLabel titlevelocity = new JLabel("Velocity[km/s]: ");
 	JLabel titlestarornot = new JLabel("Is it a star? ");
@@ -95,12 +104,6 @@ public class ProjectMainFrame extends JFrame {
 	JLabel name = new JLabel("");
 	JLabel radius = new JLabel("");
 	JLabel mass = new JLabel("");
-//	JLabel xlocation = new JLabel("");
-//	JLabel ylocation = new JLabel("");
-//	JLabel zlocation = new JLabel("");
-//	JLabel xvelocity = new JLabel("");
-//	JLabel yvelocity = new JLabel("");
-//	JLabel zvelocity = new JLabel("");
 	JLabel location = new JLabel("");
 	JLabel velocity = new JLabel("");
 	JLabel starornot = new JLabel("");
@@ -110,13 +113,7 @@ public class ProjectMainFrame extends JFrame {
 		name.setText(obj.name);
 		radius.setText(String.valueOf(df.format(obj.objectRadius*10000)));
 		mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 7))));	
-//		xlocation.setText(String.valueOf(obj.position.x));
-//		ylocation.setText(String.valueOf(obj.position.y));	
-//		zlocation.setText(String.valueOf(obj.position.z));
 		location.setText("["+df.format(obj.position.x)+" ; "+df.format(obj.position.y)+" ; "+df.format(obj.position.z)+"]");
-//		xvelocity.setText(String.valueOf(obj.velocity.x*Math.pow(10, 8)));	
-//		yvelocity.setText(String.valueOf(obj.velocity.y*Math.pow(10, 8)));
-//		zvelocity.setText(String.valueOf(obj.velocity.z*Math.pow(10, 8)));	
 		velocity.setText("["+df.format(obj.velocity.x*Math.pow(10,7))+" ; "+df.format(obj.velocity.y*Math.pow(10,7))+" ; "+df.format(obj.velocity.z*Math.pow(10,7))+"]");
 		starornot.setText(String.valueOf(obj.starornot));
 		
@@ -194,6 +191,7 @@ public class ProjectMainFrame extends JFrame {
 	  		
 	  		this.setJMenuBar(menubar);
 	  		menubar.add(file);
+	  		file.add(importing);
 	  		file.add(save);
 	  		
 	  		
@@ -213,18 +211,6 @@ public class ProjectMainFrame extends JFrame {
 	  		parameterespanel.add(mass);
 	  		parameterespanel.add(titleradius);
 	  		parameterespanel.add(radius);
-//	  		parameterespanel.add(titlexlocation);
-//	  		parameterespanel.add(xlocation);
-//	  		parameterespanel.add(titleylocation);
-//	  		parameterespanel.add(ylocation);
-//	  		parameterespanel.add(titlezlocation);
-//	  		parameterespanel.add(zlocation);
-//	  		parameterespanel.add(titlexvelocity);
-//	  		parameterespanel.add(xvelocity);
-//	  		parameterespanel.add(titleyvelocity);
-//	  		parameterespanel.add(yvelocity);
-//	  		parameterespanel.add(titlezvelocity);
-//	  		parameterespanel.add(zvelocity);
 	  		parameterespanel.add(titlelocation);
 	  		parameterespanel.add(location);
 	  		parameterespanel.add(titlevelocity);
@@ -235,12 +221,29 @@ public class ProjectMainFrame extends JFrame {
 	  		
 	  		addobject.setAlignmentX(Component.CENTER_ALIGNMENT);
 	  		leftside.add(addobject);
+	  		modifyobject.setAlignmentX(Component.CENTER_ALIGNMENT);
+	  		leftside.add(modifyobject);
+	  		modifyobject.addActionListener(new JButtonListener1(this));
+	  		deleteobject.setAlignmentX(Component.CENTER_ALIGNMENT);
+	  		leftside.add(deleteobject);	
+	  		deleteobject.addActionListener(new JButtonListener(this){
+	  			public void actionPerformed(ActionEvent e){
+	            		int index = planetList.getSelectedIndex();
+	            		if(planetList.isValid()) {
+	                    planetList.removeItemAt(index);
+	                    objects.remove(index);
+	                    sketchpanel.repaint();
+	                    }
+	            		
+	            }});
+	  		
 	  		addobject.addActionListener(new JButtonListener(this));
 	  		leftside.add(planetList);
 	  		planetList.addActionListener(new JComboBoxListener(this));
 	  		leftside.add(parameterespanel);
 	  		leftside.add(Box.createRigidArea(new Dimension(0, 225)));
 	  		leftside.add(Box.createRigidArea(new Dimension(0, 150)));
+	  		
 	  		
 	  		
 //	  		bottom.add(speed);
@@ -393,7 +396,7 @@ public class ProjectMainFrame extends JFrame {
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getActionCommand() == "Add an object")
+			if (arg0.getActionCommand() == "   Add an object  ")
 			{
 				
 				StarFrame frame = new StarFrame(mainFrame);
@@ -404,6 +407,25 @@ public class ProjectMainFrame extends JFrame {
 		}
 	}
 
+	public class JButtonListener1 implements ActionListener{
+		
+		ProjectMainFrame mainFrame = null;
+		
+		JButtonListener1(ProjectMainFrame mainFrame){
+		this.mainFrame = mainFrame;
+		
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (arg0.getActionCommand() == "Modify an object")
+			{
 
-
+				Planet ob = null;
+				
+        		mainFrame.modifyData(ob);
+                sketchpanel.repaint();
+	}
+}
+		
+}
 }
