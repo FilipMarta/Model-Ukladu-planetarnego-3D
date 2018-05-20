@@ -84,7 +84,6 @@ public class ProjectMainFrame extends JFrame {
 		int index = planetList.getSelectedIndex();
 		if(planetList.isValid()) {
 		
-			//ob = objects.get(index);
 			ob = objects.set(index, p);
 			StarFrame starframe = new StarFrame(this);
 			starframe.setVisible(true);
