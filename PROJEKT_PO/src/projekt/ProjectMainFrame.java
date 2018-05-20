@@ -80,7 +80,6 @@ public class ProjectMainFrame extends JFrame {
 	
 	public void modifyData(Planet p) {
 		
-		
 		Planet ob = null;
 		Planet newob = null;
 		int index = planetList.getSelectedIndex();
