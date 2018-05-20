@@ -19,13 +19,16 @@ import NewAnimation.*;
 
 public class Sketch2D extends JPanel{
 	ArrayList<Planet> list;
-	BufferedImage img;
 	float maxdistance;
 	float A;
 	
 	public Sketch2D(ArrayList<Planet> list) {
 		this.list = list;
 		
+	}
+	
+	public void setList(ArrayList<Planet> list) {
+		this.list = list;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -44,7 +47,7 @@ public class Sketch2D extends JPanel{
 			g2d.drawString(">", this.getWidth()-8, this.getHeight()/2+5);
 			
 			g2d.drawLine(this.getWidth()/2+2, 0, this.getWidth()/2+2, this.getHeight());
-			g2d.drawString("z", this.getWidth()/2+12, this.getHeight()-10);
+			g2d.drawString("z", this.getWidth()/2-12, this.getHeight()-10);
 			g2d.drawString("V", this.getWidth()/2-1, this.getHeight());
 			
 			for(int i=0; i<20;i++) {
@@ -72,25 +75,26 @@ public class Sketch2D extends JPanel{
 					A = (float) (0.9*this.getHeight()/2)/maxdistance;
 				}
 				for(int i=0;i<list.size();i++) {
+//					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)-15, this.getHeight()/2+(int)(list.get(i).position.z*A)-5);
+//					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 5, 5);
 					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)-15, this.getHeight()/2+(int)(list.get(i).position.z*A)-5);
 					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 5, 5);
 
 				}
-				System.out.println(maxdistance);
-//				DecimalFormat df=new DecimalFormat("0.00");
-//				String xdigformate = df.format(this.getWidth()/A/20); 
-//				String zdigformate = df.format(this.getHeight()/A/20);
-//					double xdig;
-//					double zdig;
-//					try {
-//						xdig = (double)df.parse(xdigformate);
-//						g2d.drawString(Double.toString(xdig), this.getWidth()*11/20,this.getHeight()/2-10);
-//						zdig = (double) df.parse(zdigformate);
-//						g2d.drawString(Double.toString(zdig), this.getWidth()/2+10,this.getHeight()*11/20+5);
-//					} catch (ParseException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+				DecimalFormat df=new DecimalFormat("0.00");
+				String xdigformate = df.format(this.getWidth()/A/20); 
+				String zdigformate = df.format(this.getHeight()/A/20);
+					double xdig;
+					double zdig;
+					try {
+						xdig = (double)df.parse(xdigformate);
+						g2d.drawString(Double.toString(xdig), this.getWidth()-40,this.getHeight()/2+20);
+						zdig = (double) df.parse(zdigformate);
+						g2d.drawString(Double.toString(zdig), this.getWidth()/2+10,this.getHeight()-22);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 			}
 			

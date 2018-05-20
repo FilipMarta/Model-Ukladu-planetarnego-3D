@@ -174,14 +174,14 @@ public class StarFrame extends JFrame { //Marta
 				}
 				else {
 					ob = new Planet(name.getText(), Float.parseFloat(radius.getText()), (float)(Float.parseFloat(mass.getText())*Math.pow(10, 25)),
-							new Point3f(Float.parseFloat(xlocation.getText())*(float)Math.pow(10, 8),Float.parseFloat(ylocation.getText())*(float)Math.pow(10, 8), Float.parseFloat(zlocation.getText())*(float)Math.pow(10, 8)),
+							new Point3f(Float.parseFloat(xlocation.getText())*(float)Math.pow(10, 7),Float.parseFloat(ylocation.getText())*(float)Math.pow(10, 7), Float.parseFloat(zlocation.getText())*(float)Math.pow(10, 7)),
 						new Vector3f(Float.parseFloat(xvelocity.getText()),	Float.parseFloat(yvelocity.getText()), Float.parseFloat(zvelocity.getText())));//, starbutton.isSelected());
 					ob.setTexture(tex);
 				}
 				mainFrame.addNewObject(ob);
 				mainFrame.sketchpanel.repaint();
 				StarFrame.this.setVisible(false);
-				
+				mainFrame.showData(ob);
 			}
 	}
 }

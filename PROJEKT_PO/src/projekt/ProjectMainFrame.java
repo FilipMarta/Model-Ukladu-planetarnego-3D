@@ -10,6 +10,7 @@ import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.media.j3d.Appearance;
@@ -73,44 +74,50 @@ public class ProjectMainFrame extends JFrame {
 		objects.add(p);
 		planetList.addItem(p.name);
 		
-		showData(p);
 	}
 	
-	JPanel parameterespanel = new JPanel(new GridLayout(10,2));
+	JPanel parameterespanel = new JPanel(new GridLayout(15,1));
 	
+	DecimalFormat df=new DecimalFormat("0.00");
 	JLabel titlename = new JLabel("Name: ");
-	JLabel titleradius = new JLabel(" Radius: ");
-	JLabel titlemass = new JLabel(" Mass: ");
-	JLabel titlexlocation = new JLabel("X location: ");
-	JLabel titleylocation = new JLabel(" Y location: ");
-	JLabel titlezlocation = new JLabel(" Z location: ");
-	JLabel titlexvelocity = new JLabel("X velocity: ");
-	JLabel titleyvelocity = new JLabel(" Y velocity: ");
-	JLabel titlezvelocity = new JLabel(" Z velocity: ");
+	JLabel titleradius = new JLabel(" Radius[km]: ");
+	JLabel titlemass = new JLabel(" Mass[kg*10^25]: ");
+//	JLabel titlexlocation = new JLabel("X location[km*10^8]: ");
+//	JLabel titleylocation = new JLabel(" Y location[km*10^8]: ");
+//	JLabel titlezlocation = new JLabel(" Z location[km*10^8]: ");
+//	JLabel titlexvelocity = new JLabel("X velocity[km/s]: ");
+//	JLabel titleyvelocity = new JLabel(" Y velocity[km/s]: ");
+//	JLabel titlezvelocity = new JLabel(" Z velocity[km/s]: ");
+	JLabel titlelocation = new JLabel("Location[km*10^8]: ");
+	JLabel titlevelocity = new JLabel("Velocity[km/s]: ");
 	JLabel titlestarornot = new JLabel("Is it a star? ");
 	
 	JLabel name = new JLabel("");
 	JLabel radius = new JLabel("");
 	JLabel mass = new JLabel("");
-	JLabel xlocation = new JLabel("");
-	JLabel ylocation = new JLabel("");
-	JLabel zlocation = new JLabel("");
-	JLabel xvelocity = new JLabel("");
-	JLabel yvelocity = new JLabel("");
-	JLabel zvelocity = new JLabel("");
+//	JLabel xlocation = new JLabel("");
+//	JLabel ylocation = new JLabel("");
+//	JLabel zlocation = new JLabel("");
+//	JLabel xvelocity = new JLabel("");
+//	JLabel yvelocity = new JLabel("");
+//	JLabel zvelocity = new JLabel("");
+	JLabel location = new JLabel("");
+	JLabel velocity = new JLabel("");
 	JLabel starornot = new JLabel("");
 	
 	public void showData(Planet obj) {
 		
 		name.setText(obj.name);
-		radius.setText(String.valueOf(obj.objectRadius));
-		mass.setText(String.valueOf(obj.mass));	
-		xlocation.setText(String.valueOf(obj.position.x));
-		ylocation.setText(String.valueOf(obj.position.y));	
-		zlocation.setText(String.valueOf(obj.position.z));
-		xvelocity.setText(String.valueOf(obj.velocity.x));	
-		yvelocity.setText(String.valueOf(obj.velocity.y));
-		zvelocity.setText(String.valueOf(obj.velocity.z));	
+		radius.setText(String.valueOf(df.format(obj.objectRadius*10000)));
+		mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 7))));	
+//		xlocation.setText(String.valueOf(obj.position.x));
+//		ylocation.setText(String.valueOf(obj.position.y));	
+//		zlocation.setText(String.valueOf(obj.position.z));
+		location.setText("["+df.format(obj.position.x)+" ; "+df.format(obj.position.y)+" ; "+df.format(obj.position.z)+"]");
+//		xvelocity.setText(String.valueOf(obj.velocity.x*Math.pow(10, 8)));	
+//		yvelocity.setText(String.valueOf(obj.velocity.y*Math.pow(10, 8)));
+//		zvelocity.setText(String.valueOf(obj.velocity.z*Math.pow(10, 8)));	
+		velocity.setText("["+df.format(obj.velocity.x*Math.pow(10,7))+" ; "+df.format(obj.velocity.y*Math.pow(10,7))+" ; "+df.format(obj.velocity.z*Math.pow(10,7))+"]");
 		starornot.setText(String.valueOf(obj.starornot));
 		
 	}
@@ -123,6 +130,8 @@ public class ProjectMainFrame extends JFrame {
 			@Override
 			public void run() {
 				
+				Star sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)), new Point3f(0,0,0), new Vector3f(0,0,0));
+				addNewObject(sun);
 				
 				Planet mercury = new Planet("Mercury", 2439,(float)(3.3011*Math.pow(10, 23)), new Point3f(0,0,(float)(-6.982*Math.pow(10,7))), new Vector3f(38.86f,0,0));
 				mercury.setTexture("Mercury.jpg");
@@ -188,6 +197,7 @@ public class ProjectMainFrame extends JFrame {
 	  		file.add(save);
 	  		
 	  		
+	  		
 	  		leftside.setLayout(new BoxLayout(leftside, BoxLayout.Y_AXIS));
 	  		leftside.setPreferredSize(new Dimension(200, this.getHeight()));
 	  		this.add(leftside, BorderLayout.LINE_START);
@@ -203,18 +213,22 @@ public class ProjectMainFrame extends JFrame {
 	  		parameterespanel.add(mass);
 	  		parameterespanel.add(titleradius);
 	  		parameterespanel.add(radius);
-	  		parameterespanel.add(titlexlocation);
-	  		parameterespanel.add(xlocation);
-	  		parameterespanel.add(titleylocation);
-	  		parameterespanel.add(ylocation);
-	  		parameterespanel.add(titlezlocation);
-	  		parameterespanel.add(zlocation);
-	  		parameterespanel.add(titlexvelocity);
-	  		parameterespanel.add(xvelocity);
-	  		parameterespanel.add(titleyvelocity);
-	  		parameterespanel.add(yvelocity);
-	  		parameterespanel.add(titlezvelocity);
-	  		parameterespanel.add(zvelocity);
+//	  		parameterespanel.add(titlexlocation);
+//	  		parameterespanel.add(xlocation);
+//	  		parameterespanel.add(titleylocation);
+//	  		parameterespanel.add(ylocation);
+//	  		parameterespanel.add(titlezlocation);
+//	  		parameterespanel.add(zlocation);
+//	  		parameterespanel.add(titlexvelocity);
+//	  		parameterespanel.add(xvelocity);
+//	  		parameterespanel.add(titleyvelocity);
+//	  		parameterespanel.add(yvelocity);
+//	  		parameterespanel.add(titlezvelocity);
+//	  		parameterespanel.add(zvelocity);
+	  		parameterespanel.add(titlelocation);
+	  		parameterespanel.add(location);
+	  		parameterespanel.add(titlevelocity);
+	  		parameterespanel.add(velocity);
 	  		parameterespanel.add(titlestarornot);
 	  		parameterespanel.add(starornot);
 
@@ -241,8 +255,6 @@ public class ProjectMainFrame extends JFrame {
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setTitle("AnimationPanel test");
 					
-					Star sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)), new Point3f(0,0,0), new Vector3f(0,0,0));
-					addNewObject(sun);
 //					Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
 //					earth.setTexture("Earth.jpg");
 //					addNewObject(earth);
@@ -267,12 +279,6 @@ public class ProjectMainFrame extends JFrame {
 						public void windowClosing(WindowEvent e) {
 							apanel.thread.timer.stop();
 							apanel=null;
-//							for(int i=0;i<objects.size();i++) {
-//								objects.get(i).planetMovement.removeChild(objects.get(i));
-//								objects.get(i).planetMovement=new TransformGroup();
-//								objects.get(i).planetMovement.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-//								objects.get(i).planetMovement.addChild(objects.get(i));
-//							}
 							ArrayList<Planet> tmplist = new ArrayList<Planet>();
 							for(int i=0;i<objects.size();i++) {
 								if(objects.get(i).starornot) {
@@ -284,6 +290,7 @@ public class ProjectMainFrame extends JFrame {
 								
 							}
 							objects=tmplist;
+							sketchpanel.setList(objects);
 							
 						}
 
@@ -334,10 +341,16 @@ public class ProjectMainFrame extends JFrame {
 						
 					}
 					else {
-						for(int i=0;i<9;i++) {
+						for(int i=0;i<10;i++) {
 							objects.remove(indexofSS);
-							sketchpanel.repaint();
+							planets.remove(indexofSS);
+							planetList.removeItemAt(indexofSS);
 						}
+						sketchpanel.repaint();
+						planetList.revalidate();
+						planetList.repaint();
+						
+						
 					}
 					
 				}
@@ -363,8 +376,10 @@ public class ProjectMainFrame extends JFrame {
 			// TODO Auto-generated method stub
 			mainFrame.planetList.getSelectedIndex();
 			int index = mainFrame.planetList.getSelectedIndex();
-			
-			showData(mainFrame.objects.get(index));
+			if(planetList.isValid()) {
+				showData(mainFrame.objects.get(index));	
+			}
+
 		}
 		
 	}
