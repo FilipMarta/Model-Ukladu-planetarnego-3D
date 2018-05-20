@@ -88,7 +88,7 @@ public class ProjectMainFrame extends JFrame {
 
 			StarFrame starframe = new StarFrame(this);
 			ob = objects.set(index, p);
-			starframe.ob = newob;
+			starframe.ob = p;
 			starframe.setVisible(true);
 			
 		}
@@ -427,7 +427,7 @@ public class ProjectMainFrame extends JFrame {
 				Planet ob = null;
 				
         		mainFrame.modifyData(ob);
-                sketchpanel.repaint();
+                //sketchpanel.repaint();
 	}
 }
 		
