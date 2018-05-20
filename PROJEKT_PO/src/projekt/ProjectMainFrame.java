@@ -76,8 +76,7 @@ public class ProjectMainFrame extends JFrame {
 		planetList.addItem(p.name);
 		
 	}
-	
-	int nothing;
+
 	
 	public void modifyData(Planet p) {
 		
