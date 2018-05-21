@@ -61,23 +61,40 @@ public class StarFrame extends JFrame { //Marta
 	
 	Boolean updaterequest = false; 
 	
-	public void updateData() {
+	public void loadData() {
 		
 		name.setText(ob.name);
-		mass.setText(String.valueOf(ob.mass));
-		radius.setText(String.valueOf(ob.objectRadius));
-		xlocation.setText(String.valueOf(ob.position.x));
-		ylocation.setText(String.valueOf(ob.position.y));
-		zlocation.setText(String.valueOf(ob.position.z));
-		xvelocity.setText(String.valueOf(ob.velocity.x));
-		yvelocity.setText(String.valueOf(ob.velocity.y));
-		zvelocity.setText(String.valueOf(ob.velocity.z));
-		starbutton.setSelected(ob.starornot);
+		mass.setText(String.valueOf(ob.mass*Math.pow(10,7)));
+		radius.setText(String.valueOf(ob.objectRadius*10000));
+		xlocation.setText(String.valueOf(ob.position.x*Math.pow(10,7)));
+		ylocation.setText(String.valueOf(ob.position.y*Math.pow(10,7)));
+		zlocation.setText(String.valueOf(ob.position.z*Math.pow(10,7)));
+		xvelocity.setText(String.valueOf(ob.velocity.x*Math.pow(10,7)));
+		yvelocity.setText(String.valueOf(ob.velocity.y*Math.pow(10,7)));
+		zvelocity.setText(String.valueOf(ob.velocity.z*Math.pow(10,7)));
+		//starbutton.setSelected(ob.starornot);
 		
 		updaterequest = true;
 		
 	}
 	
+	public void refreshObject() {
+		
+		ob.name=name.getText();
+		ob.mass=Float.parseFloat(mass.getText());
+		ob.objectRadius=Float.parseFloat(radius.getText());
+		ob.position.x=Float.parseFloat(xlocation.getText());
+		ob.position.y=Float.parseFloat(ylocation.getText());
+		ob.position.z=Float.parseFloat(zlocation.getText());
+		ob.velocity.x=Float.parseFloat(xvelocity.getText());
+		ob.velocity.y=Float.parseFloat(yvelocity.getText());
+		ob.velocity.z=Float.parseFloat(zvelocity.getText());
+
+		//objects.set(selectedindex, p);
+		
+		
+	}
+
 	public StarFrame(ProjectMainFrame mainFrame){
 		this.setSize(WEIGHT, HEIGHT);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -187,6 +204,7 @@ public class StarFrame extends JFrame { //Marta
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "OK")
 			{
+				if(updaterequest == false) {
 				Planet ob;
 				if(starornot) {
 					ob = new Star(name.getText(), Float.parseFloat(radius.getText()), (float)(Float.parseFloat(mass.getText())*Math.pow(10, 25)),
@@ -200,16 +218,18 @@ public class StarFrame extends JFrame { //Marta
 					ob.setTexture(tex);
 				}
 				
-				if(updaterequest == false) {
+				
 				mainFrame.addNewObject(ob);
 				mainFrame.sketchpanel.repaint();
 				StarFrame.this.setVisible(false);
 				mainFrame.showData(ob);
 				}
 				else {
-					mainFrame.refreshObject(ob);
+					refreshObject();
+					mainFrame.sketchpanel.repaint();
 					StarFrame.this.setVisible(false);
 					mainFrame.showData(ob);
+					
 				}
 			}
 	}

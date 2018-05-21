@@ -79,11 +79,6 @@ public class ProjectMainFrame extends JFrame {
 
 	int selectedindex = -1;
 	
-	public void refreshObject(Planet p) {
-		
-		objects.set(selectedindex, p);
-		
-	}
 	
 	public void modifyData() {
 		
@@ -93,7 +88,7 @@ public class ProjectMainFrame extends JFrame {
 			StarFrame starframe = new StarFrame(this);
 	
 			starframe.ob = objects.get(selectedindex);
-			starframe.updateData();
+			starframe.loadData();
 			starframe.setVisible(true);
 			
 		}
@@ -136,7 +131,7 @@ public class ProjectMainFrame extends JFrame {
 			@Override
 			public void run() {
 				
-				Star sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 32)), new Point3f(0,0,0), new Vector3f(0,0,0));
+				Star sun = new Star("Sun", 696342, (float)(1.98855*Math.pow(10, 30)), new Point3f(0,0,0), new Vector3f(0,0,0));
 				addNewObject(sun);
 				
 				Planet mercury = new Planet("Mercury", 2439,(float)(3.3011*Math.pow(10, 23)), new Point3f(0,0,(float)(-6.982*Math.pow(10,7))), new Vector3f(38.86f,0,0));
@@ -303,7 +298,7 @@ public class ProjectMainFrame extends JFrame {
 							}
 							objects=tmplist;
 							sketchpanel.setList(objects);
-							
+							sketchpanel.repaint();
 						}
 
 						@Override
@@ -428,10 +423,8 @@ public class ProjectMainFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "Modify an object")
 			{
-				
-				//Planet p;
         		mainFrame.modifyData();
-                //sketchpanel.repaint();
+
 	}
 }
 		
