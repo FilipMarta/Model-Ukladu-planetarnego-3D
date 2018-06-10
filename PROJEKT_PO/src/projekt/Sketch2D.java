@@ -82,19 +82,10 @@ public class Sketch2D extends JPanel{
 
 				}
 				DecimalFormat df=new DecimalFormat("0.00");
-				String xdigformate = df.format(this.getWidth()/A/20); 
-				String zdigformate = df.format(this.getHeight()/A/20);
-					double xdig;
-					double zdig;
-					try {
-						xdig = (double)df.parse(xdigformate);
-						g2d.drawString(Double.toString(xdig), this.getWidth()-40,this.getHeight()/2+20);
-						zdig = (double) df.parse(zdigformate);
-						g2d.drawString(Double.toString(zdig), this.getWidth()/2+10,this.getHeight()-22);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				String xdig = df.format(this.getWidth()/A/20);
+				String zdig = df.format(this.getHeight()/A/20);
+				g2d.drawString(xdig, this.getWidth()-40,this.getHeight()/2+20);
+				g2d.drawString(zdig, this.getWidth()/2+10,this.getHeight()-22);
 
 			}
 			

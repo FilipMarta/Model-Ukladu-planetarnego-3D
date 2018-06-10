@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
+import com.sun.j3d.loaders.IncorrectFormatException;
+
 import NewAnimation.AnimationPanel;
 import NewAnimation.Planet;
 import NewAnimation.Star;
@@ -66,9 +68,13 @@ public class StarFrame extends JFrame { //Marta
 		name.setText(ob.name);
 		mass.setText(String.valueOf(ob.mass*Math.pow(10,7)));
 		radius.setText(String.valueOf(ob.objectRadius*10000));
-		xlocation.setText(String.valueOf(ob.position.x*Math.pow(10,7)));
-		ylocation.setText(String.valueOf(ob.position.y*Math.pow(10,7)));
-		zlocation.setText(String.valueOf(ob.position.z*Math.pow(10,7)));
+		if(ob.starornot) {
+			radius.setText(String.valueOf(ob.objectRadius*200000));
+
+		}
+		xlocation.setText(String.valueOf(ob.position.x*Math.pow(10,8)));
+		ylocation.setText(String.valueOf(ob.position.y*Math.pow(10,8)));
+		zlocation.setText(String.valueOf(ob.position.z*Math.pow(10,8)));
 		xvelocity.setText(String.valueOf(ob.velocity.x*Math.pow(10,7)));
 		yvelocity.setText(String.valueOf(ob.velocity.y*Math.pow(10,7)));
 		zvelocity.setText(String.valueOf(ob.velocity.z*Math.pow(10,7)));
@@ -81,14 +87,14 @@ public class StarFrame extends JFrame { //Marta
 	public void refreshObject() {
 		
 		ob.name=name.getText();
-		ob.mass=Float.parseFloat(mass.getText());
-		ob.objectRadius=Float.parseFloat(radius.getText());
-		ob.position.x=Float.parseFloat(xlocation.getText());
-		ob.position.y=Float.parseFloat(ylocation.getText());
-		ob.position.z=Float.parseFloat(zlocation.getText());
-		ob.velocity.x=Float.parseFloat(xvelocity.getText());
-		ob.velocity.y=Float.parseFloat(yvelocity.getText());
-		ob.velocity.z=Float.parseFloat(zvelocity.getText());
+		ob.mass=(float) (Float.parseFloat(mass.getText())/Math.pow(10,7));
+		ob.objectRadius=Float.parseFloat(radius.getText())/10000;
+		ob.position.x=(float) (Float.parseFloat(xlocation.getText())/Math.pow(10,8));
+		ob.position.y=(float) (Float.parseFloat(ylocation.getText())/Math.pow(10,8));
+		ob.position.z=(float) (Float.parseFloat(zlocation.getText())/Math.pow(10,8));
+		ob.velocity.x=(float) (Float.parseFloat(xvelocity.getText())/Math.pow(10,7));
+		ob.velocity.y=(float) (Float.parseFloat(yvelocity.getText())/Math.pow(10,7));
+		ob.velocity.z=(float) (Float.parseFloat(zvelocity.getText())/Math.pow(10,7));
 
 		//objects.set(selectedindex, p);
 		
@@ -204,6 +210,7 @@ public class StarFrame extends JFrame { //Marta
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "OK")
 			{
+				try {
 				if(updaterequest == false) {
 				Planet ob;
 				if(starornot) {
@@ -213,7 +220,7 @@ public class StarFrame extends JFrame { //Marta
 				}
 				else {
 					ob = new Planet(name.getText(), Float.parseFloat(radius.getText()), (float)(Float.parseFloat(mass.getText())*Math.pow(10, 25)),
-							new Point3f(Float.parseFloat(xlocation.getText())*(float)Math.pow(10, 7),Float.parseFloat(ylocation.getText())*(float)Math.pow(10, 7), Float.parseFloat(zlocation.getText())*(float)Math.pow(10, 7)),
+							new Point3f(Float.parseFloat(xlocation.getText())*(float)Math.pow(10, 8),Float.parseFloat(ylocation.getText())*(float)Math.pow(10, 8), Float.parseFloat(zlocation.getText())*(float)Math.pow(10, 8)),
 						new Vector3f(Float.parseFloat(xvelocity.getText()),	Float.parseFloat(yvelocity.getText()), Float.parseFloat(zvelocity.getText())));//, starbutton.isSelected());
 					ob.setTexture(tex);
 				}
@@ -230,6 +237,9 @@ public class StarFrame extends JFrame { //Marta
 					StarFrame.this.setVisible(false);
 					mainFrame.showData(ob);
 					
+				}
+				}catch(NumberFormatException e) {
+					JOptionPane.showMessageDialog(new JFrame(), "Incorrect data type!","Warning!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 	}

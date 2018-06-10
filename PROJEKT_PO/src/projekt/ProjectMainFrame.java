@@ -7,11 +7,17 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Texture;
@@ -86,9 +92,14 @@ public class ProjectMainFrame extends JFrame {
 		if(planetList.isValid()) {
 		
 			StarFrame starframe = new StarFrame(this);
+			
 	
 			starframe.ob = objects.get(selectedindex);
 			starframe.loadData();
+			if(starframe.ob.starornot) {
+				starframe.starbutton.setSelected(true);
+				}
+			starframe.starbutton.setEnabled(false);
 			starframe.setVisible(true);
 			
 		}
@@ -116,8 +127,11 @@ public class ProjectMainFrame extends JFrame {
 		
 		name.setText(obj.name);
 		radius.setText(String.valueOf(df.format(obj.objectRadius*10000)));
+		if(obj.starornot) {
+			radius.setText(String.valueOf(df.format(obj.objectRadius*200000)));
+		}
 		mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 7))));	
-		location.setText("["+df.format(obj.position.x)+" ; "+df.format(obj.position.y)+" ; "+df.format(obj.position.z)+"]");
+		location.setText("["+df.format(obj.position.x/10)+" ; "+df.format(obj.position.y/10)+" ; "+df.format(obj.position.z/10)+"]");
 		velocity.setText("["+df.format(obj.velocity.x*Math.pow(10,7))+" ; "+df.format(obj.velocity.y*Math.pow(10,7))+" ; "+df.format(obj.velocity.z*Math.pow(10,7))+"]");
 		starornot.setText(String.valueOf(obj.starornot));
 		
@@ -189,6 +203,7 @@ public class ProjectMainFrame extends JFrame {
 		tmpthread.start();
 		}
 	ProjectMainFrame() throws HeadlessException {
+			this.setTitle("Your Universe Simulation");
 	  		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  		this.setSize(800,600);
 	  		this.setBackground(Color.black);
@@ -196,8 +211,91 @@ public class ProjectMainFrame extends JFrame {
 	  		this.setJMenuBar(menubar);
 	  		menubar.add(file);
 	  		file.add(importing);
+	  		importing.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					JFileChooser chooser = new JFileChooser();
+					int r=chooser.showOpenDialog(null);
+					if(r==JFileChooser.APPROVE_OPTION) {
+						String filePath = chooser.getSelectedFile().getAbsolutePath();
+						FileInputStream fr;
+						try {
+							fr = new FileInputStream(filePath);
+							InputStreamReader isr = new InputStreamReader(fr, "UTF-8");
+							BufferedReader reader = new BufferedReader(isr);
+							
+							String line;
+							while((line=reader.readLine()) != null){
+								StringTokenizer tokens = new StringTokenizer(line);
+								String name = tokens.nextToken();
+								float mass = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 32));
+								float radius = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 4));
+								Point3f position = new Point3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
+								Vector3f velocity = new Vector3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
+								String starornot = tokens.nextToken();
+								Planet p;
+								if(starornot.equals("true")) {
+									mass/=100;
+									radius*=20;
+									p = new Star(name,radius, mass, position, velocity);
+									addNewObject(p);
+									sketchpanel.repaint();
+									
+								}
+								else {
+									p = new Planet(name,radius, mass, position, velocity);
+									addNewObject(p);
+									p.randomTexture();
+									sketchpanel.repaint();
+								}
+							}
+							
+							
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						
+					}
+					
+				}
+	  			
+	  		});
 	  		file.add(save);
-	  		
+	  		save.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser chooser = new JFileChooser();
+					int r=chooser.showSaveDialog(null);
+					if(r==JFileChooser.APPROVE_OPTION) {
+						String path = chooser.getSelectedFile().getAbsolutePath();
+	  					PrintWriter writer;
+						try {
+							writer = new PrintWriter(path.toString()+".txt", "UTF-8");
+							for(int i=0;i<objects.size();i++) {
+								Planet p = objects.get(i);
+			  	                writer.write(p.name+"\t"+p.mass+"\t"+p.objectRadius+"\t"+p.position.x+"\t"+p.position.y+"\t"+p.position.z+"\t"+
+								p.velocity.x+"\t"+p.velocity.y+"\t"+p.velocity.z+"\t"+p.starornot+"\r\n");
+							}
+		  	                writer.close();
+						} catch (FileNotFoundException | UnsupportedEncodingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+					}
+				}
+	  			
+	  		});
 	  		
 	  		
 	  		leftside.setLayout(new BoxLayout(leftside, BoxLayout.Y_AXIS));

@@ -1,8 +1,7 @@
 package NewAnimation;
 
 import java.awt.HeadlessException;
-
-
+import java.util.Random;
 
 import javax.media.j3d.*;
 import javax.vecmath.*;
@@ -26,6 +25,40 @@ public class Planet extends Sphere{
 	
 	public TransformGroup planetMovement = new TransformGroup();
 
+	
+	public void randomTexture() {
+		Random rand = new Random();
+		int r = rand.nextInt(8);
+		switch(r) {
+	  		case 0:
+	  		setTexture("Mercury.jpg");
+	  		break;
+	  	  case 1:
+	  		setTexture("Venus.jpg");
+	  		  break;
+	  	  case 2:
+	  		setTexture("Earth.jpg");
+	  		  break;
+	  	  case 4:
+	  		setTexture("2k_mars.jpg");
+	  		  break;
+	  	  case 5:
+	  		setTexture("Jupiter.jpg");
+	  	  	break;
+	  	  case 6:
+	  		setTexture("Saturn.jpg");
+	  		  break;
+	  	  case 7:
+	  		setTexture("Uranus.png");
+	  		  break;
+	  	  case 8:
+	  		setTexture("2k_neptune.jpg");
+	  		  break;
+	  	  case 3:
+	  		setTexture("Pluto.jpg");
+	  		  break;
+		}
+	}
 	
 	
 	TransformGroup getTransformGroup() {
