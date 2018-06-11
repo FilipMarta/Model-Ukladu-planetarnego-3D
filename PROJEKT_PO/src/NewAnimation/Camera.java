@@ -80,12 +80,6 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 		return "The Direction of Looking: ("+x+" ; "+y+" ; "+z+")";
 	}
 
-//	void computeUp() {
-//		double t = tetha+Math.PI/2;
-//		updirection.x=(float)(Math.sin(phi)*Math.cos(t));
-//		updirection.y = (float) Math.sin(t);
-//		updirection.z=(float)(-Math.cos(phi)*Math.cos(t));
-//	}
 	
 	void rotateCamera() {
 		double p = phi+phi_tmp;
@@ -93,7 +87,6 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 		direction.x=(float)(Math.sin(p)*Math.cos(t));
 		direction.y = (float) Math.sin(t);
 		direction.z=(float)(-Math.cos(p)*Math.cos(t));
-		//computeUp();
 		
 	}
 
@@ -148,11 +141,7 @@ public class Camera implements MouseListener, MouseMotionListener, KeyListener{
 		    panel.cameraTransformGroup.setTransform(cameraMovement);
 	}
 	
-	
-	
-	
-	
-	
+
 	
 	
 	

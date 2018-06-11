@@ -32,6 +32,8 @@ public class AnimationPanel extends JPanel{
 	Star sun;
 	Cylinder disk;
 	ArrayList<Planet> planetList = new ArrayList<Planet>();
+	String[] collided=null;
+	
 	
 	GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
 	Canvas3D canvas = new Canvas3D(config) 
@@ -50,7 +52,7 @@ public class AnimationPanel extends JPanel{
         	this.getGraphics2D().drawString("Speed: 1s = 50 days",1,110);
         	this.getGraphics2D().drawString("Timer: "+df.format(thread.time)+" days",1,130);
         	this.getGraphics2D().drawString("Symulation Speed: "+df.format(thread.speed)+"x",1,150);
-            
+
             int x1 = canvas.getWidth()-120;
             int y1 = 120;
             int x2;
@@ -83,10 +85,12 @@ public class AnimationPanel extends JPanel{
         }
 	};
 	
+	void Task() {
+		canvas.getGraphics2D().drawString(collided[0]+" and "+collided[1]+" collision",canvas.getWidth()/2,150);
+	}
 	
 	
 	public void addObject(Planet planet) {
-		//planetList.add(planet);
 		group.addChild(planet.getTransformGroup());
 	}
 	
@@ -99,14 +103,6 @@ public class AnimationPanel extends JPanel{
 	
 	void initLights() {
 		
-		
-//		PointLight plight = new PointLight();
-//        plight.setColor(new Color3f(Color.WHITE));
-//        plight.setPosition(0.0f,0.0f,0.0f);
-//        plight.setInfluencingBounds(bounds);
-//        group.addChild(plight);
-        
-        
         AmbientLight alight = new AmbientLight();
         
         alight.setInfluencingBounds(bounds);
@@ -146,16 +142,7 @@ public class AnimationPanel extends JPanel{
 		for(int i=0;i<planetList.size();i++) {
 			addObject(planetList.get(i));
 		}
-		
-//		Text2D text = new Text2D("lolz", new Color3f(Color.WHITE), "Arial", 400, Font.PLAIN);
-//		group.addChild(text);
-
-		
 		makeDisc();
-		//Planet object = new Planet("NONAME", 6000,(float)(6*Math.pow(10, 24)), new Point3f((float)(2*Math.pow(10,8)),0,0), new Vector3f(10,0,-15f));
-		//addObject(object);
-		
-//		group.addChild(sun.getTransformGroup());
 	}
 	
 	
@@ -189,32 +176,8 @@ public class AnimationPanel extends JPanel{
 		universe.addBranchGraph(group);
 		initCamera();
 		
-		thread = new AnimationThread(planetList);
-		//thread.start();
-		
+		thread = new AnimationThread(planetList, this);		
 	}
 	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		
-		frame.setSize(1280, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("AnimationPanel test");
-		
-//		AnimationPanel apanel = new AnimationPanel(planetList);
-//		
-//		frame.add(apanel, BorderLayout.CENTER);
-		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-		
-		
-		frame.setVisible(true);
-
-	}
 
 }

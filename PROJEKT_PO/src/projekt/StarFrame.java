@@ -28,7 +28,7 @@ public class StarFrame extends JFrame { //Marta
 	JPanel bottompanel = new JPanel(new GridLayout(1,1));
 	
 	JLabel title = new JLabel("Set parameters of celestial object:");
-	JLabel lname = new JLabel("Name: ");
+	JLabel lname = new JLabel("Name(one word): ");
 	JLabel lmass = new JLabel("Mass [kg*10^25]: ");
 	JLabel lradius = new JLabel("Radius [km]: ");
 	JLabel lxlocation = new JLabel("X location [km*10^8]: ");
@@ -66,19 +66,18 @@ public class StarFrame extends JFrame { //Marta
 	public void loadData() {
 		
 		name.setText(ob.name);
-		mass.setText(String.valueOf(ob.mass*Math.pow(10,7)));
+		mass.setText(String.valueOf(ob.mass*Math.pow(10,5)));
 		radius.setText(String.valueOf(ob.objectRadius*10000));
 		if(ob.starornot) {
 			radius.setText(String.valueOf(ob.objectRadius*200000));
 
 		}
-		xlocation.setText(String.valueOf(ob.position.x*Math.pow(10,8)));
-		ylocation.setText(String.valueOf(ob.position.y*Math.pow(10,8)));
-		zlocation.setText(String.valueOf(ob.position.z*Math.pow(10,8)));
+		xlocation.setText(String.valueOf(ob.position.x/10));
+		ylocation.setText(String.valueOf(ob.position.y/10));
+		zlocation.setText(String.valueOf(ob.position.z/10));
 		xvelocity.setText(String.valueOf(ob.velocity.x*Math.pow(10,7)));
 		yvelocity.setText(String.valueOf(ob.velocity.y*Math.pow(10,7)));
 		zvelocity.setText(String.valueOf(ob.velocity.z*Math.pow(10,7)));
-		//starbutton.setSelected(ob.starornot);
 		
 		updaterequest = true;
 		
@@ -87,17 +86,22 @@ public class StarFrame extends JFrame { //Marta
 	public void refreshObject() {
 		
 		ob.name=name.getText();
-		ob.mass=(float) (Float.parseFloat(mass.getText())/Math.pow(10,7));
+		ob.mass=(float) (Float.parseFloat(mass.getText())/Math.pow(10,5));
 		ob.objectRadius=Float.parseFloat(radius.getText())/10000;
-		ob.position.x=(float) (Float.parseFloat(xlocation.getText())/Math.pow(10,8));
-		ob.position.y=(float) (Float.parseFloat(ylocation.getText())/Math.pow(10,8));
-		ob.position.z=(float) (Float.parseFloat(zlocation.getText())/Math.pow(10,8));
+		ob.position.x=(float) (Float.parseFloat(xlocation.getText())*10);
+		ob.position.y=(float) (Float.parseFloat(ylocation.getText())*10);
+		ob.position.z=(float) (Float.parseFloat(zlocation.getText())*10);
 		ob.velocity.x=(float) (Float.parseFloat(xvelocity.getText())/Math.pow(10,7));
 		ob.velocity.y=(float) (Float.parseFloat(yvelocity.getText())/Math.pow(10,7));
 		ob.velocity.z=(float) (Float.parseFloat(zvelocity.getText())/Math.pow(10,7));
-
-		//objects.set(selectedindex, p);
-		
+		if(ob.starornot) {
+			if(texturebox.getSelectedIndex()!=textures.length)
+			{
+				ob.setTexture(tex);
+			}
+			ob.objectRadius/=20;
+		}
+		ob.move();		
 		
 	}
 
@@ -141,9 +145,11 @@ public class StarFrame extends JFrame { //Marta
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED) {
 					starornot = true;
+					texturebox.setEnabled(false);
 				}
 				else {
 					starornot = false;
+					texturebox.setEnabled(true);
 				}
 			}
 			

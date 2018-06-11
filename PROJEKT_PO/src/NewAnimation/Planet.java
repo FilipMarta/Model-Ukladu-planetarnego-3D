@@ -65,25 +65,13 @@ public class Planet extends Sphere{
 		return planetMovement;
 	}
 	
-	void setPosition(Point3f newposition) {
-		this.position.x=newposition.x;
-		this.position.y=newposition.y;
-		this.position.z=newposition.z;
-	}
-	
-	void setVelocity(Vector3f newvelocity) {
-		this.position.x=newvelocity.x;
-		this.position.y=newvelocity.y;
-		this.position.z=newvelocity.z;
-	}
-	
 	
 	public void setTexture(String filename) {
 		texture = new TextureLoader("src/Textures/"+filename, null).getTexture();
 		appearance.setTexture(texture);
 	}
 
-	void move() {
+	public void move() {
 		Transform3D transform = new Transform3D();
 		Vector3f vector = new Vector3f(position);
 		transform.setTranslation(vector);
@@ -110,7 +98,7 @@ public class Planet extends Sphere{
 		
 		this.name = name;
 		this.objectRadius = objectRadius/10000;
-		this.mass = (float) (mass/Math.pow(10,32));
+		this.mass = (float) (mass/Math.pow(10,30));
 		this.position = new Point3f(toLocal(position.x),toLocal(position.y),toLocal(position.z));
 		computeRadius();
 		this.velocity = new Vector3f(toLocal(velocity.x), toLocal(velocity.y),toLocal(velocity.z));
@@ -125,13 +113,15 @@ public class Planet extends Sphere{
 		Material material = new Material();
 		material.setSpecularColor(new Color3f(0,0,0));
 		appearance.setMaterial(material);	
+		appearance.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+		appearance.setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		appearance.setCapability(Appearance.ALLOW_TRANSPARENCY_ATTRIBUTES_WRITE);
 		
-
+		
 		planetMovement.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		planetMovement.addChild(this);
 		this.move();
 		this.setAppearance(appearance);
-		//System.out.println(position.x/Math.pow(10, 7));
 		
 	}
 	public Planet(Planet p) {

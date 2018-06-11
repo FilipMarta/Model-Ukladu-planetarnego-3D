@@ -17,7 +17,7 @@ public class Star extends Planet{
 	PointLight light;
 
 	public Star(String name, float objectRadius, float mass, Point3f position, Vector3f velocity) throws HeadlessException {
-		super(name, objectRadius/20, mass*100, position, velocity);
+		super(name, objectRadius/20, mass, position, velocity);
 		
 		starornot = true;
 		this.setTexture("2k_sun.jpg");

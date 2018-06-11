@@ -75,8 +75,6 @@ public class Sketch2D extends JPanel{
 					A = (float) (0.9*this.getHeight()/2)/maxdistance;
 				}
 				for(int i=0;i<list.size();i++) {
-//					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)-15, this.getHeight()/2+(int)(list.get(i).position.z*A)-5);
-//					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 5, 5);
 					g2d.drawString(list.get(i).name, this.getWidth()/2+(int)(list.get(i).position.x*A)-15, this.getHeight()/2+(int)(list.get(i).position.z*A)-5);
 					g2d.fillOval(this.getWidth()/2+(int)(list.get(i).position.x*A), this.getHeight()/2+(int)(list.get(i).position.z*A), 5, 5);
 
@@ -90,7 +88,6 @@ public class Sketch2D extends JPanel{
 			}
 			
 			
-			//g2d.fillOval(100, 100, 10, 10);
 			
 		}
 	

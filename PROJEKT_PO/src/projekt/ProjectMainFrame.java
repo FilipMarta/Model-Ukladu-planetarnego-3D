@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import javax.media.j3d.Appearance;
@@ -55,8 +56,9 @@ public class ProjectMainFrame extends JFrame {
 	JPanel bottom = new JPanel();
 	
 	AnimationPanel apanel = null;
-	int indexofSS;
+	int indexofSS, amountofSS;
 	
+	Planet emptyObject = new Planet("", 0,0,new Point3f(0,0,0), new Vector3f(0,0,0));
 	
 	ArrayList<String> planets = new ArrayList<String>();
 	
@@ -66,14 +68,12 @@ public class ProjectMainFrame extends JFrame {
 	
 	JComboBox<Object> planetList = new JComboBox<Object>(planets.toArray());
 	
-	//JLabel lstarlabel = new JLabel("Object"); //l od left (dla Filipa)
 	
-		
+	JFrame aniframe; 
+	
 	
 	JButton play = new JButton("Play");
-	JCheckBox playsolarsystem = new JCheckBox("Play/add Solar System Simulation");
-	JButton reverse = new JButton("Reverse");
-
+	JCheckBox playsolarsystem = new JCheckBox("Insert Solar System");
 	
 	public void addNewObject(Planet p) {
 		
@@ -91,8 +91,10 @@ public class ProjectMainFrame extends JFrame {
 		selectedindex = planetList.getSelectedIndex();
 		if(planetList.isValid()) {
 		
-			StarFrame starframe = new StarFrame(this);
 			
+			StarFrame starframe = new StarFrame(this);
+			starframe.texturebox.addItem("");
+			starframe.texturebox.setSelectedIndex(starframe.textures.length);
 	
 			starframe.ob = objects.get(selectedindex);
 			starframe.loadData();
@@ -127,10 +129,11 @@ public class ProjectMainFrame extends JFrame {
 		
 		name.setText(obj.name);
 		radius.setText(String.valueOf(df.format(obj.objectRadius*10000)));
+		mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 5))));	
 		if(obj.starornot) {
 			radius.setText(String.valueOf(df.format(obj.objectRadius*200000)));
+			mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 5))));	
 		}
-		mass.setText(String.valueOf(df.format(obj.mass*Math.pow(10, 7))));	
 		location.setText("["+df.format(obj.position.x/10)+" ; "+df.format(obj.position.y/10)+" ; "+df.format(obj.position.z/10)+"]");
 		velocity.setText("["+df.format(obj.velocity.x*Math.pow(10,7))+" ; "+df.format(obj.velocity.y*Math.pow(10,7))+" ; "+df.format(obj.velocity.z*Math.pow(10,7))+"]");
 		starornot.setText(String.valueOf(obj.starornot));
@@ -140,7 +143,7 @@ public class ProjectMainFrame extends JFrame {
 	
 	void makeSS() {
 		
-		Thread tmpthread = new Thread(new Runnable() {
+		Thread makingSSThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -176,7 +179,6 @@ public class ProjectMainFrame extends JFrame {
 				TextureAttributes texAtt = new TextureAttributes();
 				texAtt.setTextureMode(TextureAttributes.MODULATE);
 				app.setTextureAttributes(texAtt);
-				//app.setMaterial(new Material());
 				TransparencyAttributes ta = new TransparencyAttributes(TransparencyAttributes.NICEST, 0f);
 				app.setTransparencyAttributes(ta);
 				Cylinder rings = new Cylinder(3f*saturn.objectRadius,0.1f, Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,100, 100, app);
@@ -195,12 +197,13 @@ public class ProjectMainFrame extends JFrame {
 				pluto.setTexture("Pluto.jpg");
 				addNewObject(pluto);
 				sketchpanel.repaint();
+				amountofSS=10;
 				
 			}
 			
 		});
 		
-		tmpthread.start();
+		makingSSThread.start();
 		}
 	ProjectMainFrame() throws HeadlessException {
 			this.setTitle("Your Universe Simulation");
@@ -226,42 +229,42 @@ public class ProjectMainFrame extends JFrame {
 							BufferedReader reader = new BufferedReader(isr);
 							
 							String line;
-							while((line=reader.readLine()) != null){
-								StringTokenizer tokens = new StringTokenizer(line);
-								String name = tokens.nextToken();
-								float mass = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 32));
-								float radius = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 4));
-								Point3f position = new Point3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
-								Vector3f velocity = new Vector3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
-								String starornot = tokens.nextToken();
-								Planet p;
-								if(starornot.equals("true")) {
-									mass/=100;
-									radius*=20;
-									p = new Star(name,radius, mass, position, velocity);
-									addNewObject(p);
-									sketchpanel.repaint();
-									
+							try {
+								while((line=reader.readLine()) != null){
+									StringTokenizer tokens = new StringTokenizer(line);
+									String name = tokens.nextToken();
+									float mass = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 32));
+									float radius = (float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 4));
+									Point3f position = new Point3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
+									Vector3f velocity = new Vector3f((float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)),(float) (Float.parseFloat(tokens.nextToken())*Math.pow(10, 7)));
+									String starornot = tokens.nextToken();
+									Planet p;
+									if(starornot.equals("true")) {
+										mass/=100;
+										radius*=20;
+										p = new Star(name,radius, mass, position, velocity);
+										addNewObject(p);
+										sketchpanel.repaint();
+										
+									}
+									else {
+										p = new Planet(name,radius, mass, position, velocity);
+										addNewObject(p);
+										p.randomTexture();
+										sketchpanel.repaint();
+									}
 								}
-								else {
-									p = new Planet(name,radius, mass, position, velocity);
-									addNewObject(p);
-									p.randomTexture();
-									sketchpanel.repaint();
-								}
+							} catch (NumberFormatException | HeadlessException | IOException e) {
+								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(new JFrame(), "Loading data failed!","Importing filed!", JOptionPane.WARNING_MESSAGE);
 							}
 							
 							
-						} catch (FileNotFoundException e) {
+						} catch (FileNotFoundException|UnsupportedEncodingException|NoSuchElementException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(new JFrame(), "Only .txt file are readable!","Loading file failed!", JOptionPane.WARNING_MESSAGE);
 						}
+
 
 						
 					}
@@ -330,12 +333,18 @@ public class ProjectMainFrame extends JFrame {
 	  		leftside.add(deleteobject);	
 	  		deleteobject.addActionListener(new JButtonListener(this){
 	  			public void actionPerformed(ActionEvent e){
+	  				
+	  				try {
 	            		int index = planetList.getSelectedIndex();
-	            		if(planetList.isValid()) {
-	                    planetList.removeItemAt(index);
-	                    objects.remove(index);
-	                    sketchpanel.repaint();
-	                    }
+	            		if(index>=indexofSS&&index<indexofSS+amountofSS) {
+	            			amountofSS-=1;
+	            		}
+	            		planetList.removeItemAt(index);
+	            		objects.remove(index);
+	            		sketchpanel.repaint();
+	  				}catch(ArrayIndexOutOfBoundsException arg0) {
+	  					//do nothing
+	  				}
 	            		
 	            }});
 	  		
@@ -347,36 +356,28 @@ public class ProjectMainFrame extends JFrame {
 	  		leftside.add(Box.createRigidArea(new Dimension(0, 150)));
 	  		
 	  		
-	  		
-//	  		bottom.add(speed);
-//	  		bottom.add(sslider);
 	  		bottom.add(play);
 	  		play.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JFrame frame = new JFrame();
-					frame.setSize(1280, 800);
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					frame.setTitle("AnimationPanel test");
-					
-//					Planet earth = new Planet("Earth", 6371, (float)(5.97219*Math.pow(10,24)), new Point3f(0,0,(float)(-1.49598261*Math.pow(10,8))), new Vector3f(29.29f,0,0));
-//					earth.setTexture("Earth.jpg");
-//					addNewObject(earth);
+					aniframe = new JFrame();
+					aniframe.setSize(1280, 800);
+					aniframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					aniframe.setTitle("Animation Panel");
 
 					
 					apanel = new AnimationPanel(objects);
-					frame.add(apanel, BorderLayout.CENTER);
+					aniframe.add(apanel, BorderLayout.CENTER);
 					
 					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-					frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+					aniframe.setLocation(dim.width/2-aniframe.getSize().width/2, dim.height/2-aniframe.getSize().height/2);
 					
 					
-					frame.addWindowListener(new WindowListener() {
+					aniframe.addWindowListener(new WindowListener() {
 
 						@Override
 						public void windowOpened(WindowEvent e) {
-							// TODO Auto-generated method stub
 							
 						}
 
@@ -431,7 +432,7 @@ public class ProjectMainFrame extends JFrame {
 						
 					});
 					
-					frame.setVisible(true);
+					aniframe.setVisible(true);
 					
 				}
 	  			
@@ -446,7 +447,7 @@ public class ProjectMainFrame extends JFrame {
 						
 					}
 					else {
-						for(int i=0;i<10;i++) {
+						for(int i=0;i<amountofSS;i++) {
 							objects.remove(indexofSS);
 							planets.remove(indexofSS);
 							planetList.removeItemAt(indexofSS);
@@ -462,7 +463,6 @@ public class ProjectMainFrame extends JFrame {
 	  			
 	  		});
 	  		bottom.add(playsolarsystem);
-//	  		bottom.add(reverse);
 	  		
 	}
 	
@@ -482,7 +482,11 @@ public class ProjectMainFrame extends JFrame {
 			mainFrame.planetList.getSelectedIndex();
 			int index = mainFrame.planetList.getSelectedIndex();
 			if(planetList.isValid()) {
-				showData(mainFrame.objects.get(index));	
+				try {
+					showData(mainFrame.objects.get(index));	
+				}catch(ArrayIndexOutOfBoundsException e) {
+					showData(mainFrame.emptyObject);
+				}
 			}
 
 		}
@@ -521,10 +525,22 @@ public class ProjectMainFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand() == "Modify an object")
 			{
-        		mainFrame.modifyData();
+				try {
+					mainFrame.modifyData();
+				}catch(ArrayIndexOutOfBoundsException e) {
+					//do nothing
+				}
 
 	}
 }
 		
 }
+	
+	public static void main(String[] args) {
+		
+		ProjectMainFrame startframe = new ProjectMainFrame();
+		
+		startframe.setVisible(true);
+
+	}
 }
