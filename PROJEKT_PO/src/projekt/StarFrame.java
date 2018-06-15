@@ -94,7 +94,8 @@ public class StarFrame extends JFrame { //Marta
 		ob.velocity.x=(float) (Float.parseFloat(xvelocity.getText())/Math.pow(10,7));
 		ob.velocity.y=(float) (Float.parseFloat(yvelocity.getText())/Math.pow(10,7));
 		ob.velocity.z=(float) (Float.parseFloat(zvelocity.getText())/Math.pow(10,7));
-		if(ob.starornot) {
+
+		if(!ob.starornot) {
 			if(texturebox.getSelectedIndex()!=textures.length)
 			{
 				ob.setTexture(tex);

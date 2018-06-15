@@ -1,7 +1,7 @@
 package NewAnimation;
 
 import java.awt.*;
-
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -112,7 +112,8 @@ public class AnimationPanel extends JPanel{
 	void initBackground() {
 		Sphere background = new Sphere(10000, Primitive.GENERATE_NORMALS_INWARD + Primitive.GENERATE_TEXTURE_COORDS, 100);
 		Appearance appearance = new Appearance();
-		Texture texture = new TextureLoader("src/Textures/8k_stars_milky_way.jpg", null).getTexture();
+		URL res = getClass().getResource("Textures/8k_stars_milky_way.jpg");
+		Texture texture = new TextureLoader(res, null).getTexture();
 		appearance.setTexture(texture);
 		background.setAppearance(appearance);
 		
@@ -123,7 +124,8 @@ public class AnimationPanel extends JPanel{
 	
 	void makeDisc() {
 		Appearance app = new Appearance();
-		Texture texture = new TextureLoader("src/Textures/Disc.png", null).getTexture();
+		URL res = getClass().getResource("Textures/Disc.png");
+		Texture texture = new TextureLoader(res, null).getTexture();
 		app.setTexture(texture);
 		TextureAttributes texAtt = new TextureAttributes();
 		texAtt.setTextureMode(TextureAttributes.MODULATE);

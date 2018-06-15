@@ -173,6 +173,7 @@ public class ProjectMainFrame extends JFrame {
 				
 				Planet saturn = new Planet("Saturn", 58232, (float)(5.6834*Math.pow(10,26)), new Point3f(0,0,(float)(-1.51450*Math.pow(10,9))), new Vector3f(9.09f,0,0));
 				saturn.setTexture("Saturn.jpg");
+				addNewObject(saturn);
 				
 				Planet uranus = new Planet("Uranus", 25362, (float)(8.6813*Math.pow(10,25)), new Point3f(0,0,(float)(-3.00362*Math.pow(10,9))), new Vector3f(6.49f,0,0));
 				uranus.setTexture("Uranus.png");
