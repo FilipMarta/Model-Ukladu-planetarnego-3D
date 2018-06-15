@@ -68,9 +68,23 @@ public class Planet extends Sphere{
 	
 	
 	public void setTexture(String filename) {
-		URL res = getClass().getResource("/textures/"+filename);
+		URL res = getClass().getResource("Textures/"+filename);
 		texture = new TextureLoader(res, null).getTexture();
 		appearance.setTexture(texture);
+		if(filename=="Saturn.jpg") {
+			Appearance app = new Appearance();
+			URL res2 = getClass().getResource("Textures/saturn_rings.png");
+			Texture texture = new TextureLoader(res2, null).getTexture();
+			app.setTexture(texture);
+			TextureAttributes texAtt = new TextureAttributes();
+			texAtt.setTextureMode(TextureAttributes.MODULATE);
+			app.setTextureAttributes(texAtt);
+			TransparencyAttributes ta = new TransparencyAttributes(TransparencyAttributes.NICEST, 0f);
+			app.setTransparencyAttributes(ta);
+			Cylinder rings = new Cylinder(3f*this.objectRadius,0.1f, Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,100, 100, app);
+			planetMovement.addChild(rings);
+		}
+
 	}
 
 	public void move() {
