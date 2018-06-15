@@ -175,7 +175,7 @@ public class ProjectMainFrame extends JFrame {
 				saturn.setTexture("Saturn.jpg");
 				
 				Appearance app = new Appearance();
-				URL res = getClass().getResource("../textures/saturn_rings.png");
+				URL res = getClass().getResource("/textures/saturn_rings.png");
 				Texture texture = new TextureLoader(res, null).getTexture();
 				app.setTexture(texture);
 				TextureAttributes texAtt = new TextureAttributes();

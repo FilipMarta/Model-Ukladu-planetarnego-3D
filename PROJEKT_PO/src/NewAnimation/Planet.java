@@ -68,7 +68,7 @@ public class Planet extends Sphere{
 	
 	
 	public void setTexture(String filename) {
-		URL res = getClass().getResource("../textures/"+filename);
+		URL res = getClass().getResource("/textures/"+filename);
 		texture = new TextureLoader(res, null).getTexture();
 		appearance.setTexture(texture);
 	}
