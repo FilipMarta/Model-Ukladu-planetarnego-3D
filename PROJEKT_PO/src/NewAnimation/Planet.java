@@ -1,6 +1,7 @@
 package NewAnimation;
 
 import java.awt.HeadlessException;
+import java.net.URL;
 import java.util.Random;
 
 import javax.media.j3d.*;
@@ -67,7 +68,8 @@ public class Planet extends Sphere{
 	
 	
 	public void setTexture(String filename) {
-		texture = new TextureLoader("src/Textures/"+filename, null).getTexture();
+		URL res = getClass().getResource("../textures/"+filename);
+		texture = new TextureLoader(res, null).getTexture();
 		appearance.setTexture(texture);
 	}
 

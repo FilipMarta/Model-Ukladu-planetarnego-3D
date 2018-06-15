@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -174,7 +175,8 @@ public class ProjectMainFrame extends JFrame {
 				saturn.setTexture("Saturn.jpg");
 				
 				Appearance app = new Appearance();
-				Texture texture = new TextureLoader("src/Textures/saturn_rings.png", null).getTexture();
+				URL res = getClass().getResource("../textures/saturn_rings.png");
+				Texture texture = new TextureLoader(res, null).getTexture();
 				app.setTexture(texture);
 				TextureAttributes texAtt = new TextureAttributes();
 				texAtt.setTextureMode(TextureAttributes.MODULATE);
